@@ -15,6 +15,7 @@ void PhoneBook::addContact(Contact contact)
 	}
 	else
 	{
+		//replace the cout with the oldest contact
 		std::cout << "Phone book is full." << std::endl;
 	}
 }

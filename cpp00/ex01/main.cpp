@@ -2,8 +2,18 @@
 #include <string>
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
+#include <limits>
 
-int main()
+std::string getInput(const std::string &prompt)
+{
+	std::string input;
+	std::cout << prompt;
+	while (input.empty())
+		getline(std::cin, input);
+	return input;
+}
+
+int main(void)
 {
 	PhoneBook phoneBook;
 	std::string command;
@@ -14,32 +24,11 @@ int main()
 		if (command == "ADD")
 		{
 			Contact contact;
-			std::string firstName;
-			std::string lastName;
-			std::string nickname;
-			std::string phoneNumber;
-			std::string darkestSecret;
-			
-			std::cout << "Enter first name: ";
-			while(firstName.empty())
-				getline(std::cin, firstName);
-			contact.setFirstName(firstName);
-			std::cout << "Enter last name: ";
-			while(lastName.empty())
-			getline(std::cin, lastName);
-			contact.setLastName(lastName);
-			std::cout << "Enter nickname: ";
-			while (nickname.empty())
-				getline(std::cin, nickname);
-			contact.setNickname(nickname);
-			std::cout << "Enter phone number: ";
-			while (phoneNumber.empty())
-				getline(std::cin, phoneNumber);
-			contact.setPhoneNumber(phoneNumber);
-			std::cout << "Enter darkest secret: ";
-				while (darkestSecret.empty())
-			getline(std::cin, darkestSecret);
-			contact.setDarkestSecret(darkestSecret);
+			contact.setFirstName(getInput("Enter first name: "));
+			contact.setLastName(getInput("Enter last name: "));
+			contact.setNickname(getInput("Enter nickname: "));
+			contact.setPhoneNumber(getInput("Enter phone number: "));
+			contact.setDarkestSecret(getInput("Enter darkest secret: "));
 			phoneBook.addContact(contact);
 		}
 		else if (command == "SEARCH")
@@ -48,6 +37,13 @@ int main()
 			int index;
 			std::cout << "Enter index: ";
 			std::cin >> index;
+			while (std::cin.fail())
+			{
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cout << "Invalid input! Please try again with valid index: ";
+				std::cin >> index;
+			}
 			phoneBook.displayContact(index);
 		}
 		else if (command == "EXIT")
