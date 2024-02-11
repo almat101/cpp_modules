@@ -1,24 +1,30 @@
 #include "PhoneBook.hpp"
 #include <iomanip>
+#include <limits.h>
 
 PhoneBook::PhoneBook()
 {
 	_contactCount = 0;
+	_oldest = 0;
 }
 
 void PhoneBook::addContact(Contact contact)
 {
-	if (_contactCount < 8)
+	if (_contactCount < _maxContacts)
 	{
 		_contacts[_contactCount] = contact;
 		_contactCount++;
 	}
 	else
 	{
-		//replace the cout with the oldest contact
-		std::cout << "Phone book is full." << std::endl;
+		_contacts[_oldest] = contact;
+		if (_oldest == _maxContacts - 1)
+			_oldest = 0;
+		else
+			_oldest++;
 	}
 }
+
 
 void PhoneBook::displayContacts()
 {
@@ -58,5 +64,3 @@ void PhoneBook::displayContact(int index)
 		std::cout << "Invalid index." << std::endl;
 	}
 }
-
-

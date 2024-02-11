@@ -7,14 +7,17 @@
 
 class PhoneBook
 {
-	public:
-		PhoneBook();
-		void addContact(Contact contact);
-		void displayContacts();
-		void displayContact(int index);
-	private:
-		Contact _contacts[8];
-		int _contactCount;
+public:
+	PhoneBook();
+	void addContact(Contact contact);
+	void displayContacts();
+	void displayContact(int index);
+
+private:
+	const static int _maxContacts = 8;
+	Contact _contacts[_maxContacts];
+	int _contactCount;
+	int _oldest;
 };
 
 #endif
