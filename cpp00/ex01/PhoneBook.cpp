@@ -25,7 +25,6 @@ void PhoneBook::addContact(Contact contact)
 	}
 }
 
-
 void PhoneBook::displayContacts()
 {
 	std::cout << "     Index|First Name| Last Name|  Nickname" << std::endl;

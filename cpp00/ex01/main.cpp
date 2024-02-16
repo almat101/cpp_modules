@@ -4,27 +4,27 @@
 #include "Contact.hpp"
 #include <limits>
 #include <sstream>
+#include <cstdio>
 
 std::string getInput(const std::string &prompt)
 {
-    std::string input;
-    while (true)
-    {
-        clearerr(stdin);
-        std::cin.clear();
-        std::cout << prompt;
-        getline(std::cin, input);
-        // Check for EOF
-        if (std::cin.eof())
-        {
-            std::cin.clear(); // Clear the EOF state
-            std::cout << "EOF detected." << std::endl;
-            continue;
-        }
-        if (!input.empty())
-            break; 
-    }
-    return input;
+	std::string input;
+	while (true)
+	{
+		clearerr(stdin);
+		std::cin.clear();
+		std::cout << prompt;
+		getline(std::cin, input);
+		if (std::cin.eof())
+		{
+			std::cin.clear();
+			std::cout << "EOF detected." << std::endl;
+			continue;
+		}
+		if (!input.empty())
+			break;
+	}
+	return input;
 }
 
 int str_to_positive_int(std::string s)
@@ -62,17 +62,17 @@ void search(PhoneBook &phoneBook)
 	getline(std::cin, str_index);
 	if (std::cin.eof())
 	{
-        std::cin.clear(); // Clear the EOF state
-        std::cout << "EOF detected." << std::endl;
-        return;
-    }
+		std::cin.clear();
+		std::cout << "EOF detected." << std::endl;
+		return;
+	}
 	if (str_index.empty())
 	{
 		std::cout << "invalid index." << std::endl;
 		return;
 	}
 	int index = str_to_positive_int(str_index);
-	phoneBook.displayContact(index);	
+	phoneBook.displayContact(index);
 }
 
 int main(void)
