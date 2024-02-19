@@ -2,14 +2,11 @@
 
 int main(void)
 {
-	Zombie *zombie1 = new Zombie;
+	Zombie *zaz = newZombie("zaz");
+	zaz->announce();
 
-	Zombie zombie2("pippo");
-
-	std::cout << "hi my name is " << zombie2.get_name() << std::endl;
-	zombie1->set_name("franco");
-	std::cout << "hi my nnname is " << zombie1->get_name() << std::endl;
-	delete (zombie1);
+	randomChump("bar");
+	delete zaz;
 
 	return 0;
 }
