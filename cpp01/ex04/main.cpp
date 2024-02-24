@@ -2,17 +2,17 @@
 #include <iostream>
 #include <string>
 
-std::string ft_replace(const std::string &str, const std::string &oldStr, const std::string &newStr,int &count)
+std::string ft_replace(const std::string &str, const std::string &oldStr, const std::string &newStr,int &numReplacements)
 {
 	std::string result = str;
 	size_t pos = 0;
-	count = 0;
+	numReplacements = 0;
 	while ((pos = result.find(oldStr, pos)) != std::string::npos)
 	{
 		result.erase(pos, oldStr.length());
 		result.insert(pos, newStr);
 		pos += newStr.length();
-		count++;
+		numReplacements++;
 	}
 	return result;
 }
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	if (argc != 4)
 	{
 		std::cerr << "Error! Wrongs args!" << '\n';
-		std::cerr << "argv[1] file path\nargv[2] line to be replaced\nargv[3] line that replace\n";
+		std::cerr << "Usage:\nargv[1] file path\nargv[2] line to be replaced\nargv[3] line that replace\n";
 		return 1;
 	}
 	else
@@ -32,6 +32,11 @@ int main(int argc, char **argv)
 		std::string s2 = argv[3];
 		std::string outputFilePath = inputFilePath + ".replace";
 
+		if (s1.empty() || s2.empty())
+		{
+			std::cerr << "Ehehehe don't type empty string" << '\n';
+			return 1;
+		}
 		std::ifstream inputFile(inputFilePath.c_str());
 
 		if (!inputFile)
@@ -66,7 +71,7 @@ int main(int argc, char **argv)
 			return 1;
 		}
 		else
-			std::cout << "File copied with "<< totalReplacements << " replacements!\n";
+			std::cout << "File copied in " << outputFilePath << " with " << totalReplacements << " replacements!\n";
 	}
 	return 0;
 }

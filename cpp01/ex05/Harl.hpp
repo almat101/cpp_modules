@@ -17,6 +17,6 @@ private:
 	void error(void);
 };
 
-typedef void(Harl::*t_func) (void);
+typedef void(Harl::*t_func) (void); //new type t_func which is a pointer to a member function of Harl class
 
 #endif
