@@ -35,8 +35,18 @@ void Harl::complain(std::string level)
 {
 	t_func functionLevel[] = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
 	std::string levels[] = {"debug", "info", "warning", "error"};
+	bool found = false;
+	int numLevels = sizeof(levels) / sizeof(std::string);
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < numLevels; i++)
+	{
 		if (levels[i].compare(level) == 0)
+		{
 			(this->*functionLevel[i])();
+			found = true;
+			break;
+		}
+	}
+	if (!found)
+		std::cout << "Invalid level" << std::endl;
 }

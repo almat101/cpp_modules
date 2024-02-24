@@ -8,7 +8,7 @@ int main(void)
 	harlone->complain("info");
 	harlone->complain("warning");
 	harlone->complain("error");
-
+	harlone->complain("ajeje");
 	delete harlone;
 
 	return 0;
