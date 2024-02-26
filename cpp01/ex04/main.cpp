@@ -6,7 +6,6 @@ std::string ft_replace(const std::string &str, const std::string &oldStr, const 
 {
 	std::string result = str;
 	size_t pos = 0;
-	numReplacements = 0;
 	while ((pos = result.find(oldStr, pos)) != std::string::npos)
 	{
 		result.erase(pos, oldStr.length());
@@ -54,24 +53,21 @@ int main(int argc, char **argv)
 		}
 
 		std::string line;
-		int totalReplacements = 0;
 		int replacements = 0;
 		while (getline(inputFile, line))
 		{
 			outputFile << ft_replace(line, s1, s2, replacements) << '\n';
-			totalReplacements += replacements;
 		}
-
 		inputFile.close();
 		outputFile.close();
 
-		if (totalReplacements == 0)
+		if (replacements == 0)
 		{
 			std::cerr << "No replacements were made!" << '\n';
 			return 1;
 		}
 		else
-			std::cout << "File copied in " << outputFilePath << " with " << totalReplacements << " replacements!\n";
+			std::cout << "File copied in " << outputFilePath << " with " << replacements << " replacements!\n";
 	}
 	return 0;
 }
