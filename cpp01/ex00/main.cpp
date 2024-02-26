@@ -2,10 +2,10 @@
 
 int main(void)
 {
-	Zombie *zaz = newZombie("zaz");
+	Zombie *zaz = newZombie("zaz");		//heap zombie
 	zaz->announce();
 
-	randomChump("bar");
+	randomChump("bar");					//stack zombie
 	delete zaz;
 
 	return 0;

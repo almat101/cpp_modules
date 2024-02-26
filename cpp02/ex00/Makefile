@@ -1,4 +1,4 @@
-NAME = harl
+NAME = fixed
 
 CC = g++
 
@@ -6,8 +6,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 RM = rm -rf
 
-SRC = main.cpp \
-	Harl.cpp \
+SRC = main.cpp Fixed.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -28,3 +27,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+

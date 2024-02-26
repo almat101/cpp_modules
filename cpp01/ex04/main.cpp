@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-std::string ft_replace(const std::string &str, const std::string &oldStr, const std::string &newStr,int &numReplacements)
+std::string ft_replace(const std::string &str, const std::string &oldStr, const std::string &newStr, int &numReplacements)
 {
 	std::string result = str;
 	size_t pos = 0;
