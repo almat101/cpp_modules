@@ -1,4 +1,5 @@
 #include "Fixed.hpp"
+#include <cmath>
 
 Fixed::Fixed() : _value(0)
 {
@@ -10,15 +11,32 @@ Fixed::~Fixed()
 	std::cout << "Destructor called" << std::endl;
 }
 
+Fixed::Fixed(const int n)
+{
+	std::cout << "Int constructor called" << std::endl;
+	this->_value = n << this->_fractionalBits;
+}
+
+Fixed::Fixed(float f)
+{
+	std::cout << "Float constructor called" << std::endl;
+	int scalingFactor = 1 << this->_fractionalBits; // binaryPoint
+	float scaledResult = f * scalingFactor;
+	this->_value = round(scaledResult);
+}
+
 Fixed::Fixed(const Fixed &copy) : _value(copy._value)
 {
 	std::cout << "Copy constructor called" << std::endl;
 }
 
-Fixed &Fixed::operator=(const Fixed &copy)
+Fixed & Fixed::operator=(const Fixed & rhs)
 {
-	if (this != &copy)
-		this->_value = copy.getRawBits();
+	if (this != &rhs) // check for self assignment
+	{
+		std::cout << "Copy assignment operator called" << std::endl;
+		this->_value = rhs.getRawBits();
+	}
 	return *this;
 }
 
@@ -30,4 +48,24 @@ int Fixed::getRawBits(void) const
 void Fixed::setRawBits(int const raw)
 {
 	this->_value = raw;
+}
+
+int Fixed::toInt(void) const
+{
+	int n = this->_value >> this->_fractionalBits;
+	return n;
+}
+
+float Fixed::toFloat(void) const
+{
+	int scalingFactor = 1 << this->_fractionalBits;
+	float f = static_cast<float>(this->_value) / scalingFactor;
+	return f;
+}
+
+
+std::ostream & operator<<(std::ostream & o, Fixed const & rhs)
+{
+	o << rhs.toFloat();
+	return o;
 }
