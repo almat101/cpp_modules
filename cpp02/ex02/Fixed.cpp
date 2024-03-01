@@ -30,7 +30,6 @@ Fixed::Fixed(Fixed const &copy)
 	this->_value = copy.getRawBits();
 }
 
-
 // in operator = the function is not const
 // because the = operator is used for assignment the value of an object to another
 // this assignment change the state of the current object(this) so it cant be const
@@ -127,3 +126,28 @@ bool Fixed::operator<(Fixed const &rhs) const
 	// 	return false;
 	return (this->_value < rhs._value);
 }
+
+bool Fixed::operator>=(Fixed const &rhs) const
+{
+	std::cout << "Operator>= called from this->_value " << this->_value << " < rhs value " << rhs.getRawBits() << std::endl;
+	return (this->_value >= rhs._value);
+}
+
+bool Fixed::operator<=(Fixed const &rhs) const
+{
+	std::cout << "Operator>= called from this->_value " << this->_value << " < rhs value " << rhs.getRawBits() << std::endl;
+	return (this->_value <= rhs._value);
+}
+
+bool Fixed::operator==(Fixed const &rhs) const
+{
+	std::cout << "Operator>= called from this->_value " << this->_value << " < rhs value " << rhs.getRawBits() << std::endl;
+	return (this->_value == rhs._value);
+}
+
+bool Fixed::operator!=(Fixed const &rhs) const
+{
+	std::cout << "Operator>= called from this->_value " << this->_value << " < rhs value " << rhs.getRawBits() << std::endl;
+	return (this->_value != rhs.getRawBits());
+}
+
