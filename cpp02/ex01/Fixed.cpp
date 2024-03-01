@@ -17,15 +17,15 @@ Fixed::Fixed(const int n)
 	this->_value = n << this->_fractionalBits;
 }
 
-Fixed::Fixed(float f)
+Fixed::Fixed(const float f)
 {
 	std::cout << "Float constructor called" << std::endl;
 	int scalingFactor = 1 << this->_fractionalBits; // binaryPoint
 	float scaledResult = f * scalingFactor;
-	this->_value = round(scaledResult);
+	this->_value = roundf(scaledResult);
 }
 
-Fixed::Fixed(const Fixed &copy) : _value(copy._value)
+Fixed::Fixed(const Fixed & copy) : _value(copy._value)
 {
 	std::cout << "Copy constructor called" << std::endl;
 }
