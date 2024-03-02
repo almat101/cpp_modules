@@ -82,6 +82,8 @@ std::ostream &operator<<(std::ostream &o, Fixed const &rhs)
 // RHS is the new parameter passed in the function
 // 3 is a new object created from 1 + 2
 // is const because it does not modify the state of the current object (this or LHF)
+// the return value is a Fixed that contain the toFloat() representation of the
+// this (LHF) + the RHS
 Fixed Fixed::operator+(Fixed const &rhs) const
 {
 	std::cout << "Operator+ called from this->toFloat() " << this->toFloat() << " + rhs.toFloat() " << rhs.toFloat() << std::endl;
@@ -135,19 +137,50 @@ bool Fixed::operator>=(Fixed const &rhs) const
 
 bool Fixed::operator<=(Fixed const &rhs) const
 {
-	std::cout << "Operator>= called from this->_value " << this->_value << " < rhs value " << rhs.getRawBits() << std::endl;
+	std::cout << "Operator<= called from this->_value " << this->_value << " < rhs value " << rhs.getRawBits() << std::endl;
 	return (this->_value <= rhs._value);
 }
 
 bool Fixed::operator==(Fixed const &rhs) const
 {
-	std::cout << "Operator>= called from this->_value " << this->_value << " < rhs value " << rhs.getRawBits() << std::endl;
+	std::cout << "Operator== called from this->_value " << this->_value << " < rhs value " << rhs.getRawBits() << std::endl;
 	return (this->_value == rhs._value);
 }
 
 bool Fixed::operator!=(Fixed const &rhs) const
 {
-	std::cout << "Operator>= called from this->_value " << this->_value << " < rhs value " << rhs.getRawBits() << std::endl;
+	std::cout << "Operator!= called from this->_value " << this->_value << " < rhs value " << rhs.getRawBits() << std::endl;
 	return (this->_value != rhs.getRawBits());
 }
 
+Fixed & Fixed::min(Fixed &obj1, Fixed &obj2)
+{
+	if (obj1.getRawBits() < obj2.getRawBits())
+		return obj1;
+	else
+		return obj2;
+}
+
+const Fixed & Fixed::min(const Fixed &obj1, const Fixed &obj2)
+{
+	if (obj1.getRawBits() < obj2.getRawBits())
+		return obj1;
+	else
+		return obj2;
+}
+
+Fixed & Fixed::max(Fixed &obj1, Fixed &obj2)
+{
+	if (obj1.getRawBits() > obj2.getRawBits())
+		return obj1;
+	else
+		return obj2;
+}
+
+const Fixed & Fixed::max(Fixed const &obj1, Fixed const &obj2)
+{
+	if (obj1.getRawBits() > obj2.getRawBits())
+		return obj1;
+	else
+		return obj2;
+}
