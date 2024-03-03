@@ -20,7 +20,7 @@ Fixed::Fixed(const int n)
 Fixed::Fixed(const float f)
 {
 	std::cout << "Float constructor called" << std::endl;
-	int scalingFactor = 1 << this->_fractionalBits; // binaryPoint
+	int scalingFactor = 1 << this->_fractionalBits; // 100000000
 	float scaledResult = f * scalingFactor;
 	this->_value = roundf(scaledResult);
 }
@@ -58,7 +58,7 @@ int Fixed::toInt(void) const
 
 float Fixed::toFloat(void) const
 {
-	int scalingFactor = 1 << this->_fractionalBits;
+	int scalingFactor = 1 << this->_fractionalBits; // 1 << 8 or 100000000 or 2^8 or 256
 	float f = static_cast<float>(this->_value) / scalingFactor;
 	return f;
 }
