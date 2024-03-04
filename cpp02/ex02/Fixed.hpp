@@ -1,5 +1,5 @@
 #ifndef FIXED_HPP
-#define FiXED_HPP
+#define FIXED_HPP
 
 #include <iostream>
 #include <cmath>
