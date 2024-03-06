@@ -2,20 +2,21 @@
 
 ClapTrap::ClapTrap()
 {
-	std::cout << "Claptrap protected constructor :(" << std::endl;
+	std::cout << "ClapTrap default constructor in ScapTrap:()" << std::endl;
 }
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "claptrap destructor called" << std::endl;
+	std::cout << "clapTrap destructor called" << std::endl;
 }
 
 ClapTrap::ClapTrap(ClapTrap &copy)
 {
+	std::cout << "ClapTrap copy constructor called" << std::endl;
 	*this = copy;
 }
 
-ClapTrap &ClapTrap::operator=(ClapTrap & rhs)
+ClapTrap &ClapTrap::operator=(ClapTrap &rhs)
 {
 	if (this != &rhs)
 	{
@@ -80,9 +81,9 @@ ClapTrap::ClapTrap(std::string name) : _name(name), _hitPoints(10), _energyPoint
 
 void ClapTrap::attack(const std::string &target)
 {
-	if (this->getHitPoints() <= 0)
+	if (this->getHitPoints() == 0)
 	{
-		std::cout << this->getName() << " is dead, it can't attack is not a zombie :)" << std::endl;
+		std::cout << this->getName() << " is dead can't attack :(" << std::endl;
 		return;
 	}
 	else if (this->getEnergyPoints() == 0)
@@ -102,29 +103,16 @@ void ClapTrap::attack(const std::string &target)
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
-	if (static_cast<int>(amount) <= 0)
-	{
-		std::cout << this->getName() << " is enjoing 0 damage muahaha!" << std::endl;
-		return;
-	}
-	else if (this->getHitPoints() == 0)
-	{
-		std::cout << this->getName() << " is already dead!" << std::endl;
-		return;
-	}
-	else if (static_cast<int>(amount) > this->getHitPoints())
+	if (static_cast<int>(amount) > this->getHitPoints())
 	{
 		std::cout << this->getName() << " is dead too much damage!" << std::endl;
 		this->_hitPoints = 0;
+		return;
 	}
 	else
 	{
 		this->_hitPoints = _hitPoints - static_cast<int>(amount);
 		std::cout << this->getName() << " hit points left " << this->_hitPoints << std::endl;
-	}
-	if (this->getHitPoints() == 0)
-	{
-		std::cout << this->getName() << " is dead!" << std::endl;
 	}
 }
 

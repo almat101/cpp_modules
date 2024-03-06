@@ -2,18 +2,25 @@
 
 ClapTrap::ClapTrap()
 {
-	std::cout << "invalid constructor never been called (private) :(" << std::endl;
+	std::cout << "ClapTrap default constructor" << std::endl;
 }
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "claptrap destructor called" << std::endl;
+	std::cout << "ClapTrap destructor called" << std::endl;
+}
+
+ClapTrap::ClapTrap(std::string name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
+{
+	std::cout << this->_name << " has been constructed!!!" << std::endl;
 }
 
 ClapTrap::ClapTrap(ClapTrap &copy)
 {
+	std::cout << "copy constructor called" << std::endl;
 	*this = copy;
 }
+
 
 ClapTrap &ClapTrap::operator=(ClapTrap &rhs)
 {
@@ -47,6 +54,11 @@ int ClapTrap::getAttackDamage(void) const
 	return this->_attackDamage;
 }
 
+void ClapTrap::setName(std::string name)
+{
+	this->_name = name;
+}
+
 void ClapTrap::setHitPoints(int hit)
 {
 	this->_hitPoints = hit;
@@ -66,11 +78,6 @@ void ClapTrap::setAttackDamage(int damage)
 		this->_attackDamage = 0;
 		std::cerr << "error negative damage!" << std::endl;
 	}
-}
-
-ClapTrap::ClapTrap(std::string name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
-{
-	std::cout << this->_name << " has been constructed!!!" << std::endl;
 }
 
 void ClapTrap::attack(const std::string &target)

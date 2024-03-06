@@ -2,17 +2,21 @@
 #define SCAVTRAP_HPP
 
 #include "ClapTrap.hpp"
+#include <cstdlib>
+#include <ctime>
 
 class ScavTrap : public ClapTrap
 {
-public:
-	ScavTrap(std::string name);
-	~ScavTrap();
-	ScavTrap(ScavTrap & copy);
-	ScavTrap &operator=(ScavTrap &rhs);
+	public:
+		ScavTrap();
+		ScavTrap(std::string name);
+		~ScavTrap();
+		ScavTrap(ScavTrap & copy);
+		ScavTrap &operator=(ScavTrap &rhs);
+		// function override
+		void attack(const std::string &taget);
+		void guardGate(void);
 
-private:
-	ScavTrap(); // private constructor
 };
 
 #endif
