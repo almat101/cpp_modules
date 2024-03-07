@@ -12,7 +12,7 @@ ClapTrap::~ClapTrap()
 
 ClapTrap::ClapTrap(std::string name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
-	std::cout << this->_name << " has been constructed!!!" << std::endl;
+	std::cout << "ClapTrap " << this->_name << " has been constructed!!!" << std::endl;
 }
 
 ClapTrap::ClapTrap(ClapTrap &copy)
@@ -20,7 +20,6 @@ ClapTrap::ClapTrap(ClapTrap &copy)
 	std::cout << "copy constructor called" << std::endl;
 	*this = copy;
 }
-
 
 ClapTrap &ClapTrap::operator=(ClapTrap &rhs)
 {
@@ -82,15 +81,14 @@ void ClapTrap::setAttackDamage(int damage)
 
 void ClapTrap::attack(const std::string &target)
 {
-	// if (this->getHitPoints() <= 0) // clap trap can attack with 0 hp
-	// {
-	// 	std::cout << this->getName() << " is dead, it can't attack is not a zombie :)" << std::endl;
-	// 	return;
-	// }
-	// else
-	if (this->getEnergyPoints() == 0)
+	if (this->getHitPoints() <= 0)
 	{
-		std::cout << this->getName() << " has no energy point left :(" << std::endl;
+		std::cout << "ClapTrap " << this->getName() << " can't attack because has 0 hit points" << std::endl;
+		return;
+	}
+	else if (this->getEnergyPoints() == 0)
+	{
+		std::cout << "ClapTrap " << this->getName() << " has no energy point left :(" << std::endl;
 		return;
 	}
 	else
@@ -98,7 +96,7 @@ void ClapTrap::attack(const std::string &target)
 		std::cout << std::endl;
 		std::cout << "ClapTrap " << this->_name << " attacks " << target << ", causing " << this->_attackDamage << " points of damage!" << std::endl;
 		this->_energyPoints--;
-		std::cout << this->getName() << " energy point left " << this->_energyPoints << std::endl;
+		std::cout << "ClapTrap " << this->getName() << " now as " << this->_energyPoints << " energy points" << std::endl;
 		std::cout << std::endl;
 	}
 }
@@ -110,24 +108,15 @@ void ClapTrap::takeDamage(unsigned int amount)
 		std::cout << this->getName() << " is enjoing 0 damage muahaha!" << std::endl;
 		return;
 	}
-	else if (this->getHitPoints() == 0)
+	else if (static_cast<int>(amount) >= this->getHitPoints())
 	{
-		std::cout << this->getName() << " is already dead!" << std::endl;
-		return;
-	}
-	else if (static_cast<int>(amount) > this->getHitPoints())
-	{
-		std::cout << this->getName() << " is dead too much damage!" << std::endl;
 		this->_hitPoints = 0;
+		return;
 	}
 	else
 	{
 		this->_hitPoints = _hitPoints - static_cast<int>(amount);
 		std::cout << this->getName() << " hit points left " << this->_hitPoints << std::endl;
-	}
-	if (this->getHitPoints() == 0)
-	{
-		std::cout << this->getName() << " is dead!" << std::endl;
 	}
 }
 

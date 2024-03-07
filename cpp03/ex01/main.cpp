@@ -18,23 +18,23 @@ int main(void)
 	gimbo.guardGate();
 
 
-	gimbo.attack(ringo.getName());
 	ringo.takeDamage(gimbo.getAttackDamage());
-
-	ringo.attack(mingo.getName());
-	mingo.takeDamage(ringo.getAttackDamage());
-
-	mingo.attack(gimbo.getName());
-	gimbo.takeDamage(mingo.getAttackDamage());
-
 	gimbo.attack(ringo.getName());
-	ringo.takeDamage(gimbo.getAttackDamage());
 
-	ringo.attack(mingo.getName());
 	mingo.takeDamage(ringo.getAttackDamage());
+	ringo.attack(mingo.getName());
 
-	mingo.attack(gimbo.getName());
 	gimbo.takeDamage(mingo.getAttackDamage());
+	mingo.attack(gimbo.getName());
+
+	ringo.takeDamage(gimbo.getAttackDamage());
+	gimbo.attack(ringo.getName());
+
+	mingo.takeDamage(ringo.getAttackDamage());
+	ringo.attack(mingo.getName());
+
+	gimbo.takeDamage(mingo.getAttackDamage());
+	mingo.attack(gimbo.getName());
 
 	std::cout << std::endl;
 	std::cout << ringo.getName() << " has " << ringo.getHitPoints() << " hits point and " << ringo.getEnergyPoints() << " energy point" << std::endl;

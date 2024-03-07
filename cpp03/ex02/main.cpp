@@ -15,8 +15,8 @@ int main(void)
 	seedRandomGenerator();
 
 	gimbo.guardGate();
-	gimbo.attack("zaz");
 	zaz.takeDamage(gimbo.getAttackDamage());
+	gimbo.attack("zaz");
 
 	zaz.beRepaired(10);
 	zaz.highFivesGuys();
@@ -24,13 +24,12 @@ int main(void)
 	zaz.beRepaired(10);
 
 	ziz.setAttackDamage(50);
-	ziz.attack("gimbo");
 	gimbo.takeDamage(ziz.getAttackDamage());
+	ziz.attack("gimbo");
 
-	gimbo.attack("ziz");
 	ziz.takeDamage(gimbo.getAttackDamage());
+	gimbo.attack("ziz");
 
-	//ziz.highFivesGuys();
 
 	std::cout << std::endl;
 	std::cout << "FragTrap " << ziz.getName() << " has " << ziz.getHitPoints() << " hits point and " << ziz.getEnergyPoints() << " energy point" << std::endl;

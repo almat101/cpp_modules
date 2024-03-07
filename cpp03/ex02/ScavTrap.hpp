@@ -9,10 +9,10 @@ class ScavTrap : public ClapTrap
 {
 	public:
 		ScavTrap();
+		ScavTrap(std::string name);
 		~ScavTrap();
 		ScavTrap(ScavTrap & copy);
 		ScavTrap &operator=(ScavTrap &rhs);
-		ScavTrap(std::string name);
 		// function override
 		void attack(const std::string &taget);
 		void guardGate(void);
