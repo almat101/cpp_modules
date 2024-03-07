@@ -2,12 +2,12 @@
 
 ClapTrap::ClapTrap()
 {
-	std::cout << "ClapTrap default constructor in ScapTrap:()" << std::endl;
+	std::cout << "ClapTrap default constructor" << std::endl;
 }
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "clapTrap destructor called" << std::endl;
+	std::cout << "ClapTrap destructor called" << std::endl;
 }
 
 ClapTrap::ClapTrap(ClapTrap &copy)
@@ -87,7 +87,7 @@ void ClapTrap::attack(const std::string &target)
 	// 	return;
 	// }
 	// else
-	if (this->getEnergyPoints() == 0) //lmao
+	if (this->getEnergyPoints() == 0)
 	{
 		std::cout << this->getName() << " has no energy point left :(" << std::endl;
 		return;

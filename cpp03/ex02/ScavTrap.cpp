@@ -5,9 +5,9 @@ ScavTrap::ScavTrap()
 	std::cout << "ScavTrap default constructor" << std::endl;
 }
 
-ScavTrap::ScavTrap(std::string name) : ClapTrap(name) //this works if u want to use the constructor with name and not the default constructor
+ScavTrap::ScavTrap(std::string name) : ClapTrap(name) // call the parent constructor with name
 {
-	//this->_name = name; the initialization list is already doing the job of initializing the name so i can so this line is useless
+	//this->_name = name;
 	this->_hitPoints = 100;
 	this->_energyPoints = 50;
 	this->_attackDamage = 20;
@@ -25,11 +25,10 @@ ScavTrap::~ScavTrap()
 	std::cout << "ScavTrap destructor called!" << std::endl;
 }
 
-ScavTrap::ScavTrap(ScavTrap &copy) : ClapTrap(copy) // doesnt work if i remove this initialization list
+ScavTrap::ScavTrap(ScavTrap &copy) : ClapTrap(copy) // call the parent copy constructor
 {
 	std::cout << "ScavTrap copy constructor called" << std::endl;
-	//*this = copy; // this line is useless because the copy constructor of claptrap in the initialization list is already doing the job of copying the attributes
-	// this line is required only if scavtrap has additional attributes !!!
+	//*this = copy;
 }
 
 ScavTrap &ScavTrap::operator=(ScavTrap &rhs)
@@ -103,7 +102,7 @@ void ScavTrap::guardGate(void)
 		std::cout << std::endl;
 		std::cout << "ScavTrap " << this->getName() << " is now in Gate keeper mode 3" << std::endl;
 		this->_energyPoints /= 2;
-		this->_attackDamage *= 2;
+		this->_attackDamage *= 5;
 		std::cout << "ScavTrap " << this->getName() << " now has " << this->getHitPoints() << " hits points, " << this->getEnergyPoints() << " energy points and " << this->getAttackDamage() << " attack damages" << std::endl;
 		std::cout << std::endl;
 	}

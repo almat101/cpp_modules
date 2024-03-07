@@ -82,12 +82,13 @@ void ClapTrap::setAttackDamage(int damage)
 
 void ClapTrap::attack(const std::string &target)
 {
-	if (this->getHitPoints() <= 0)
-	{
-		std::cout << this->getName() << " is dead, it can't attack is not a zombie :)" << std::endl;
-		return;
-	}
-	else if (this->getEnergyPoints() == 0)
+	// if (this->getHitPoints() <= 0) // clap trap can attack with 0 hp
+	// {
+	// 	std::cout << this->getName() << " is dead, it can't attack is not a zombie :)" << std::endl;
+	// 	return;
+	// }
+	// else
+	if (this->getEnergyPoints() == 0)
 	{
 		std::cout << this->getName() << " has no energy point left :(" << std::endl;
 		return;

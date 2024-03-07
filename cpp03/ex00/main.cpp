@@ -1,6 +1,6 @@
 #include "ClapTrap.hpp"
 
-void printStats(ClapTrap & gigi, ClapTrap & mario, ClapTrap & copy, ClapTrap & gennaro)
+void printStats(ClapTrap &gigi, ClapTrap &mario, ClapTrap &copy, ClapTrap &gennaro)
 {
 	std::cout << std::endl;
 	std::cout << "gigi hits point : " << gigi.getHitPoints() << std::endl;
@@ -20,7 +20,6 @@ int main(void)
 	ClapTrap gigi("gigi");
 	ClapTrap copy(mario);
 	ClapTrap gennaro;
-
 
 	gennaro.setName("gennaro");
 	gennaro.setEnergyPoints(10);
@@ -47,21 +46,21 @@ int main(void)
 	mario.beRepaired(1);
 
 	// //test 2 comment the others
-	gigi.setAttackDamage(12);
-	gigi.attack("mario");
-	mario.takeDamage(12);
+	// gigi.setAttackDamage(12);
+	// gigi.attack("mario");
+	// mario.takeDamage(12);
 
 	// // test 3 with copy comment the others
-	// copy.setAttackDamage(12);
-	// std::cout << std::endl;
-	// std::cout << "----------copy of mario attack mario----------";
-	// copy.attack("mario");
-	// mario.takeDamage(12);
-	// copy.setAttackDamage(12);
-	// std::cout << std::endl;
-	// std::cout << "----------copy of mario attack gigi----------";
-	// copy.attack("gigi");
-	// gigi.takeDamage(12);
+	copy.setAttackDamage(12);
+	std::cout << std::endl;
+	std::cout << "----------copy of mario attack mario----------";
+	copy.attack("mario");
+	mario.takeDamage(12);
+	copy.setAttackDamage(12);
+	std::cout << std::endl;
+	std::cout << "----------copy of mario attack gigi----------";
+	copy.attack("gigi");
+	gigi.takeDamage(12);
 
 	// test 4 comment the others
 	// mario.setAttackDamage(42);
