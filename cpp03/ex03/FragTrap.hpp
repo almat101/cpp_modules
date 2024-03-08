@@ -3,7 +3,7 @@
 
 #include "ClapTrap.hpp"
 
-class FragTrap : virtual public ClapTrap
+class FragTrap : virtual public ClapTrap // virtual is used to obtain only one instance of the base class claptrap
 {
 	public:
 	FragTrap();

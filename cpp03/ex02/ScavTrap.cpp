@@ -81,8 +81,8 @@ void ScavTrap::guardGate(void)
 	{
 		std::cout << std::endl;
 		std::cout << "ScavTrap " << this->getName() << " is now in Gate keeper mode 1" << std::endl;
-		this->_hitPoints *= 2;
-		this->_attackDamage /= 2;
+		this->_hitPoints /= 2;
+		this->_attackDamage *= 2;
 		std::cout << "ScavTrap " << this->getName() << " now has " << this->getHitPoints() << " hits points, " << this->getEnergyPoints() << " energy points and " << this->getAttackDamage() << " attack damages" << std::endl;
 		std::cout << std::endl;
 	}
@@ -100,7 +100,7 @@ void ScavTrap::guardGate(void)
 		std::cout << std::endl;
 		std::cout << "ScavTrap " << this->getName() << " is now in Gate keeper mode 3" << std::endl;
 		this->_energyPoints /= 2;
-		this->_attackDamage *= 5;
+		this->_attackDamage *= 4;
 		std::cout << "ScavTrap " << this->getName() << " now has " << this->getHitPoints() << " hits points, " << this->getEnergyPoints() << " energy points and " << this->getAttackDamage() << " attack damages" << std::endl;
 		std::cout << std::endl;
 	}

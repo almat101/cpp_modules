@@ -110,13 +110,14 @@ void ClapTrap::takeDamage(unsigned int amount)
 	}
 	else if (static_cast<int>(amount) >= this->getHitPoints())
 	{
+		std::cout << this->getName() << " has 0 hit points" << std::endl;
 		this->_hitPoints = 0;
 		return;
 	}
 	else
 	{
 		this->_hitPoints = _hitPoints - static_cast<int>(amount);
-		//	std::cout << this->getName() << " hit points left " << this->_hitPoints << std::endl;
+		std::cout << this->getName() << " hit points left " << this->_hitPoints << std::endl;
 	}
 }
 
@@ -144,4 +145,22 @@ void ClapTrap::beRepaired(unsigned int amount)
 		std::cout << this->getName() << " hit points repaired " << this->_hitPoints << std::endl;
 		std::cout << this->getName() << " energy point left " << this->_energyPoints << std::endl;
 	}
+}
+
+bool ClapTrap::isAlive() const {
+	if (this->getHitPoints() <= 0)
+	{
+		std::cout << this->getName() << " is dead" << std::endl;
+		return false;
+	}
+	return true;
+}
+
+void ClapTrap::displayStats() const {
+	std::cout << std::endl;
+	std::cout << "Clap Trap stats" << std::endl;
+	std::cout << "name : " << this->getName() << std::endl;
+	std::cout << "hit points : " << this->getHitPoints() << std::endl;
+	std::cout << "energy points : " << this->getEnergyPoints() << std::endl;
+	std::cout << "attack damage : " << this->getAttackDamage() << std::endl;
 }

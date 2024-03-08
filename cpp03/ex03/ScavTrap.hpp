@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 
-class ScavTrap :virtual public ClapTrap
+class ScavTrap : virtual public ClapTrap // virtual is used to obtain only one instance of the base class claptrap
 {
 	public:
 		ScavTrap();

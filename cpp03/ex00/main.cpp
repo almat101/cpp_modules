@@ -10,22 +10,43 @@ int main(void)
 	gennaro.setHitPoints(42);
 	gennaro.setEnergyPoints(42);
 
-	// test 4 comment the others
 	mario.setAttackDamage(10);
-	gigi.takeDamage(10); // only way is to take damage before attacking
-	mario.attack("gigi");
-	mario.takeDamage(10);
-	gigi.attack("mario");
 
-	mario.takeDamage(gennaro.getAttackDamage());
-	gennaro.attack("mario");
+	if (mario.isAlive())
+		mario.attack("gigi");
+	else
+		std::cout << "mario is dead can't attack" << std::endl;
 
-	std::cout << "gigi hits point : " << gigi.getHitPoints() << std::endl;
-	std::cout << "gigi energy points : " << gigi.getEnergyPoints() << std::endl;
-	std::cout << "mario hit points : " << mario.getHitPoints() << std::endl;
-	std::cout << "mario energy points : " << mario.getEnergyPoints() << std::endl;
-	std::cout << "gennaro hits point : " << gennaro.getHitPoints() << std::endl;
-	std::cout << "gennaro energy points : " << gennaro.getEnergyPoints() << std::endl;
+	if (mario.isAlive())
+		gigi.takeDamage(10);
+	else
+		std::cout << "gigi is dead can't take damage" << std::endl;
+
+	if (gigi.isAlive())
+		gigi.attack("mario");
+	else
+		std::cout << "gigi is dead can't attackkkkk" << std::endl;
+
+	if (gigi.isAlive())
+		mario.takeDamage(10);
+	else
+		std::cout << "mario is dead can't takeeee damageeeeeeee" << std::endl;
+
+	gigi.beRepaired(10);
+
+	if (gennaro.isAlive())
+		gennaro.attack("mario");
+	else
+		std::cout << "gennaro is dead can't attack" << std::endl;
+
+	if (mario.isAlive())
+		mario.takeDamage(gennaro.getAttackDamage());
+	else
+		std::cout << "mario is dead can't take damage" << std::endl;
+
+	gigi.displayStats();
+	mario.displayStats();
+	gennaro.displayStats();
 
 	return 0;
 }

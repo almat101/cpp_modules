@@ -14,29 +14,37 @@ int main(void)
 
 	seedRandomGenerator();
 
+	gimbo.setAttackDamage(50);
 	gimbo.guardGate();
-	zaz.takeDamage(gimbo.getAttackDamage());
-	gimbo.attack("zaz");
 
-	zaz.beRepaired(10);
-	zaz.highFivesGuys();
+	if (gimbo.isAlive())
+		gimbo.attack("ziz");
+	if (gimbo.isAlive())
+		ziz.takeDamage(gimbo.getAttackDamage());
+
+	if (zaz.isAlive())
+		zaz.attack(gimbo.getName());
+	if (zaz.isAlive())
+		gimbo.takeDamage(zaz.getAttackDamage());
+
+	ziz.beRepaired(10);
+	ziz.highFivesGuys();
 
 	zaz.beRepaired(10);
 
 	ziz.setAttackDamage(50);
-	gimbo.takeDamage(ziz.getAttackDamage());
-	ziz.attack("gimbo");
+	if (ziz.isAlive())
+		ziz.attack(gimbo.getName());
+	if (ziz.isAlive())
+		gimbo.takeDamage(ziz.getAttackDamage());
 
-	ziz.takeDamage(gimbo.getAttackDamage());
-	gimbo.attack("ziz");
+	if (gimbo.isAlive())
+		gimbo.attack("ziz");
+	if (gimbo.isAlive())
+		ziz.takeDamage(gimbo.getAttackDamage());
 
-
-	std::cout << std::endl;
-	std::cout << "FragTrap " << ziz.getName() << " has " << ziz.getHitPoints() << " hits point and " << ziz.getEnergyPoints() << " energy point" << std::endl;
-	std::cout << "FragTrap " << zaz.getName() << " has " << zaz.getHitPoints() << " hits point and " << zaz.getEnergyPoints() << " energy point" << std::endl;
-	std::cout << "ScavTrap " << gimbo.getName() << " has " << gimbo.getHitPoints() << " hits point and " << gimbo.getEnergyPoints() << " energy point" << std::endl;
-
-	std::cout << std::endl;
-
+	ziz.displayStats();
+	zaz.displayStats();
+	gimbo.displayStats();
 	return 0;
 }

@@ -18,29 +18,55 @@ int main(void)
 	gimbo.guardGate();
 
 
-	ringo.takeDamage(gimbo.getAttackDamage());
-	gimbo.attack(ringo.getName());
+	if (gimbo.isAlive())
+		gimbo.attack(ringo.getName());
+	if (gimbo.isAlive())
+		ringo.takeDamage(gimbo.getAttackDamage());
 
-	mingo.takeDamage(ringo.getAttackDamage());
-	ringo.attack(mingo.getName());
+	if (ringo.isAlive())
+		ringo.attack(mingo.getName());
+	if (ringo.isAlive())
+		mingo.takeDamage(ringo.getAttackDamage());
 
-	gimbo.takeDamage(mingo.getAttackDamage());
-	mingo.attack(gimbo.getName());
+	if (mingo.isAlive())
+		mingo.attack(gimbo.getName());
+	if(mingo.isAlive())
+		gimbo.takeDamage(mingo.getAttackDamage());
 
-	ringo.takeDamage(gimbo.getAttackDamage());
-	gimbo.attack(ringo.getName());
+if (gimbo.isAlive())
+		gimbo.attack(ringo.getName());
+	if (gimbo.isAlive())
+		ringo.takeDamage(gimbo.getAttackDamage());
 
-	mingo.takeDamage(ringo.getAttackDamage());
-	ringo.attack(mingo.getName());
+	if (ringo.isAlive())
+		ringo.attack(mingo.getName());
+	if (ringo.isAlive())
+		mingo.takeDamage(ringo.getAttackDamage());
 
-	gimbo.takeDamage(mingo.getAttackDamage());
-	mingo.attack(gimbo.getName());
+	if (mingo.isAlive())
+		mingo.attack(gimbo.getName());
+	if(mingo.isAlive())
+		gimbo.takeDamage(mingo.getAttackDamage());
 
-	std::cout << std::endl;
-	std::cout << ringo.getName() << " has " << ringo.getHitPoints() << " hits point and " << ringo.getEnergyPoints() << " energy point" << std::endl;
-	std::cout << gimbo.getName() << " has " << gimbo.getHitPoints() << " hits point and " << gimbo.getEnergyPoints() << " energy point" << std::endl;
-	std::cout << mingo.getName() << " has " << mingo.getHitPoints() << " hits point and " << mingo.getEnergyPoints() << " energy point" << std::endl;
-	std::cout << std::endl;
+if (gimbo.isAlive())
+		gimbo.attack(ringo.getName());
+	if (gimbo.isAlive())
+		ringo.takeDamage(gimbo.getAttackDamage());
+
+	if (ringo.isAlive())
+		ringo.attack(mingo.getName());
+	if (ringo.isAlive())
+		mingo.takeDamage(ringo.getAttackDamage());
+
+	if (mingo.isAlive())
+		mingo.attack(gimbo.getName());
+	if(mingo.isAlive())
+		gimbo.takeDamage(mingo.getAttackDamage());
+
+
+	ringo.displayStats();
+	gimbo.displayStats();
+	mingo.displayStats();
 
 	return 0;
 }
