@@ -9,8 +9,8 @@ class Animal
 public:
 	Animal();
 	virtual ~Animal(); // virtual destructor is needed by compiler ---> deleting object of polymorphic class type ‘Animal’ which has non-virtual destructor might cause undefined behavior
-	Animal(Animal &copy);
-	Animal &operator=(Animal &rhs);
+	Animal(const Animal &copy);
+	Animal &operator=(const Animal &rhs);
 	std::string getType(void) const;
 	void setType(std::string);
 	void makeAnotherSound(void) const;

@@ -11,13 +11,13 @@ WrongAnimal::~WrongAnimal()
 	std::cout << "WrongAnimal destructed!" << std::endl;
 }
 
-WrongAnimal::WrongAnimal(WrongAnimal &copy)
+WrongAnimal::WrongAnimal(const WrongAnimal &copy)
 {
 	std::cout << "WrongAnimal copy constructor called!" << std::endl;
-	*this = copy;
+	this->_type = copy._type;
 }
 
-WrongAnimal &WrongAnimal::operator=(WrongAnimal &rhs)
+WrongAnimal &WrongAnimal::operator=(const WrongAnimal &rhs)
 {
 	std::cout << "WrongAnimal copy assignment operator = called!" << std::endl;
 	if (this != &rhs)
