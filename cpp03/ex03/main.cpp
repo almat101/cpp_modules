@@ -9,7 +9,7 @@ int main(void)
 {
 	seedRandomGenerator();
 
-	DiamondTrap diamond("diamondddzzz");
+	DiamondTrap diamond("diamante");
 	FragTrap diocleziano("diocleziano");
 
 	std::cout << std::endl;

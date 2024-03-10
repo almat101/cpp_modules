@@ -33,7 +33,7 @@ int main(void)
 	if(mingo.isAlive())
 		gimbo.takeDamage(mingo.getAttackDamage());
 
-if (gimbo.isAlive())
+	if (gimbo.isAlive())
 		gimbo.attack(ringo.getName());
 	if (gimbo.isAlive())
 		ringo.takeDamage(gimbo.getAttackDamage());
