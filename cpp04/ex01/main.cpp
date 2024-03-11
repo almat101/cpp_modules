@@ -36,6 +36,8 @@ int main(void)
 		delete ani[i];
 	}
 
+
+
 	// copy constructor and assignment operator test for deep copy
 	// Dog *dog1 = new Dog();
 	// Cat *cat1 = new Cat();
