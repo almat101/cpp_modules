@@ -15,7 +15,7 @@ int main(void)
 	const WrongAnimal *wrong = new WrongCat();
 	const WrongCat *catwrong = new WrongCat();
 
-	const Animal *copy = new Animal(*a);
+	const Animal *copy = new Animal(*a); // const in copy constructor made this copy possible, if there isn't const in copy costructor this cant't copy (with const is possible to copy const and non const object)
 
 	// this is not ok because the reverse order is untrue
 	// Cat* err = new Animal();
@@ -32,7 +32,7 @@ int main(void)
 	copy->makeSound();
 	m->makeSound();
 	d->makeSound();
-	
+
 	std::cout << std::endl;
 	// wrong cat without virtual makesound in wrongAnimal use the generic wrongAnimal makeSound
 	wrong->makeSound();
@@ -55,3 +55,21 @@ int main(void)
 
 	return 0;
 }
+
+// int main(void)
+// {
+// 	const Animal* meta = new Animal();
+// 	const Animal* j = new Dog();
+// 	const Animal* i = new Cat();
+// 	std::cout << j->getType() << " " << std::endl;
+// 	std::cout << i->getType() << " " << std::endl;
+// 	i->makeSound(); //will output the cat sound!
+// 	j->makeSound();
+// 	meta->makeSound();
+
+// 	delete meta;
+// 	delete j;
+// 	delete i;
+
+// return 0;
+// }
