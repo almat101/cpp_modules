@@ -30,7 +30,7 @@ int main(void)
 	if (gigi.isAlive())
 		mario.takeDamage(10);
 	else
-		std::cout << "mario is dead can't takeeee damageeeeeeee" << std::endl;
+		std::cout << "gigi is dead cannot attack mariooooo" << std::endl;
 
 	gigi.beRepaired(10);
 
