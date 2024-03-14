@@ -147,7 +147,8 @@ void ClapTrap::beRepaired(unsigned int amount)
 	}
 }
 
-bool ClapTrap::isAlive() const {
+bool ClapTrap::isAlive() const
+{
 	if (this->getHitPoints() <= 0)
 	{
 		std::cout << this->getName() << " is dead" << std::endl;
@@ -156,11 +157,29 @@ bool ClapTrap::isAlive() const {
 	return true;
 }
 
-void ClapTrap::displayStats() const {
+void ClapTrap::displayStats() const
+{
 	std::cout << std::endl;
 	std::cout << "Clap Trap stats" << std::endl;
 	std::cout << "name : " << this->getName() << std::endl;
 	std::cout << "hit points : " << this->getHitPoints() << std::endl;
 	std::cout << "energy points : " << this->getEnergyPoints() << std::endl;
 	std::cout << "attack damage : " << this->getAttackDamage() << std::endl;
+}
+
+
+//not requested by subject
+void ClapTrap::attackWithRef(ClapTrap &target, unsigned int damage)
+{
+	if (this->getHitPoints() <= 0)
+		std::cout << "ClapTrap " << this->getName() << " cannot attack " << target.getName() << " because has 0 hp" << std::endl;
+	else if (this->getEnergyPoints() <= 0)
+		std::cout << this->getName() << " cannot attack " << target.getName() << " because has 0 ep " << std::endl;
+	else
+	{
+		std::cout << "ClapTrap " << this->getName() << " with attack damage of " << this->getAttackDamage();
+		target._hitPoints -= damage;
+		std::cout << " attack with reference " << target.getName() << " that now has " << target.getHitPoints() << " hit points!!!" << std::endl;
+		this->_energyPoints--;
+	}
 }

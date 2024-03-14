@@ -10,7 +10,11 @@ int main(void)
 	gennaro.setHitPoints(42);
 	gennaro.setEnergyPoints(42);
 
-	mario.setAttackDamage(10);
+	// //attack with reference (not requested by subject)
+	// mario.setAttackDamage(10);
+	// mario.attackWithRef(gigi, mario.getAttackDamage());
+	// gigi.attackWithRef(gennaro,42);
+
 
 	if (mario.isAlive())
 		mario.attack("gigi");

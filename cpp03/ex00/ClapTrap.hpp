@@ -23,6 +23,7 @@ class ClapTrap
 	void setAttackDamage(int);
 	//public member function
     void attack(const std::string & target);
+	void attackWithRef(ClapTrap & target, unsigned int damage);
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
 	bool isAlive(void) const;
