@@ -10,7 +10,10 @@ public:
 	virtual ~Ice();
 	Ice(const Ice &copy);
 	Ice &operator=(const Ice &rhs);
+	//abstract methods
 	Ice* clone(void) const;
+	void use(ICharacter& target);
+
 };
 
 #endif
