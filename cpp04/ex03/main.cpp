@@ -3,36 +3,40 @@
 #include "Cure.hpp"
 #include "Character.hpp"
 #include "ICharacter.hpp"
+#include "IMateriaSource.hpp"
+#include "MateriaSource.hpp"
 
 int main(void)
 {
-	AMateria *ic = new Ice();
-	Ice *i = new Ice();
+	IMateriaSource *src = new MateriaSource();
 
-	Cure *g = new Cure();
-	Cure *g2 = new Cure();
-	// // i = g; not allowed because AMateria copy assign is private
-
-	*g = *g2; // this is performing the copy assignment operator
+	src->learnMateria(new Cure());
+	src->learnMateria(new Ice());
+	src->learnMateria(new Cure());
+	src->learnMateria(new Ice());
 
 
-	Ice *cloned = i->clone();
-
-	ICharacter *pippo = new Character("pippo_inzaghi");
 	ICharacter *me = new Character("me");
+	AMateria *tmp;
 
-	ic->use(*pippo); // this is ok ic is a new Ice
-	i->use(*me);
-	g->use(*pippo);
-	g2->use(*me);
+	tmp = src->createMateria("ice");
+	me->equip(tmp);
+	tmp = src->createMateria("cure");
+	me->equip(tmp);
+	tmp = src->createMateria("ice");
+	me->equip(tmp);
+	tmp = src->createMateria("cure");
+	me->equip(tmp);
 
-	std::cout << pippo->getName() << std::endl;
+	ICharacter *bob = new Character("bob");
 
-	delete ic;
-	delete i;
-	delete cloned;
-	delete pippo;
+	me->use(0, *bob);
+	me->use(1, *bob);
+	me->use(2, *bob);
+	me->use(3, *bob);
+
+	delete bob;
 	delete me;
-	delete g;
-	delete g2;
+	delete src;
+	return 0;
 }

@@ -2,5 +2,5 @@
 
 ICharacter::~ICharacter()
 {
-	std::cout << "ICharacter virtual destructor called" << std::endl;
+	//std::cout << "ICharacter virtual destructor called" << std::endl;
 }

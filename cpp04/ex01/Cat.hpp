@@ -6,16 +6,16 @@
 
 class Cat : public Animal
 {
-public:
-	Cat();
-	~Cat();
-	Cat(const Cat &copy);
-	Cat &operator=(const Cat &rhs);
-	void makeSound(void) const;
-	std::string getCatIdea(int) const;
-	void setCatIdea(int,std::string);
-private:
-	Brain *catBrain; // Cat contain a Brain* object
+	public:
+		Cat();
+		~Cat();
+		Cat(const Cat &copy);
+		Cat &operator=(const Cat &rhs);
+		void makeSound(void) const;
+		std::string getCatIdea(int) const;
+		void setCatIdea(int,std::string);
+	private:
+		Brain *catBrain; // Cat contain a Brain* object
 };
 
 #endif

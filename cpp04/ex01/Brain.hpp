@@ -6,17 +6,17 @@
 
 class Brain
 {
-public:
-	Brain();
-	~Brain();
-	Brain(const Brain & copy);
-	Brain &operator=(const Brain &rhs);
-	std::string getIdea(int) const;
-	void setIdea(int,std::string);
-	
+	public:
+		Brain();
+		~Brain();
+		Brain(const Brain & copy);
+		Brain &operator=(const Brain &rhs);
+		std::string getIdea(int) const;
+		void setIdea(int,std::string);
 
-private:
-	std::string _ideas[100];
+
+	private:
+		std::string _ideas[100];
 };
 
 #endif

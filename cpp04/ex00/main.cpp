@@ -21,23 +21,24 @@ int main(void)
 	// Cat* err = new Animal();
 	std::cout << std::endl;
 	std::cout << a->getType() << " is an animal" << std::endl;
-	std::cout << copy->getType() << " is an animal copied" << std::endl;
-	std::cout << m->getType() << " is a cat" << std::endl;
-	std::cout << d->getType() << " is a dog" << std::endl;
-	std::cout << wrong->getType() << " is a wrongAnimal" << std::endl;
-	std::cout << catwrong->getType() << " is a wrongCat" << std::endl;
-
-	std::cout << std::endl;
 	a->makeSound();
-	copy->makeSound();
-	m->makeSound();
-	d->makeSound();
-
 	std::cout << std::endl;
-	// wrong cat without virtual makesound in wrongAnimal use the generic wrongAnimal makeSound
+	std::cout << copy->getType() << " is an animal copied" << std::endl;
+	copy->makeSound();
+	std::cout << std::endl;
+	std::cout << m->getType() << " is a cat" << std::endl;
+	m->makeSound();
+	std::cout << std::endl;
+	std::cout << d->getType() << " is a dog" << std::endl;
+	d->makeSound();
+	std::cout << std::endl;
+	std::cout << wrong->getType() << " is a wrongAnimal" << std::endl;
 	wrong->makeSound();
+	std::cout << std::endl;
+	std::cout << catwrong->getType() << " is a wrongCat" << std::endl;
 	catwrong->makeSound();
 
+	std::cout << std::endl;
 	// without virtual in animal makeAnoterSound they all use the animal makeAnotherSound
 	a->makeAnotherSound();
 	copy->makeAnotherSound();
