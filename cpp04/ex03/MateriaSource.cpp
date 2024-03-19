@@ -38,7 +38,7 @@ MateriaSource &MateriaSource::operator=(MateriaSource &rhs)
 	return *this;
 }
 
-// pure virtual methods of IMateriaSource that AMateria has to override
+// pure virtual methods of IMateriaSource that MateriaSource has to override
 
 /*learnMateria(AMateria*)
 Copies the Materia passed as a parameter and store it in memory so it can be cloned
