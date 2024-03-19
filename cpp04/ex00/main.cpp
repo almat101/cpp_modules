@@ -7,30 +7,30 @@
 int main(void)
 {
 	// this is ok Animal is an Animal
-	const Animal *a = new Animal();
+	const Animal *ani = new Animal();
 	// this is ok Cat is an Animal
-	const Animal *m = new Cat();
+	const Animal *meo = new Cat();
 	// this is ok Dog is an Animal
-	const Animal *d = new Dog();
+	const Animal *doge = new Dog();
 	const WrongAnimal *wrong = new WrongCat();
 	const WrongCat *catwrong = new WrongCat();
 
-	const Animal *copy = new Animal(*a); // const in copy constructor made this copy possible, if there isn't const in copy costructor this cant't copy (with const is possible to copy const and non const object)
+	const Animal *copy = new Animal(*ani); // const in copy constructor made this copy possible, if there isn't const in copy costructor this cant't copy (with const is possible to copy const and non const object)
 
 	// this is not ok because the reverse order is untrue
 	// Cat* err = new Animal();
 	std::cout << std::endl;
-	std::cout << a->getType() << " is an animal" << std::endl;
-	a->makeSound();
+	std::cout << ani->getType() << " is an animal" << std::endl;
+	ani->makeSound();
 	std::cout << std::endl;
 	std::cout << copy->getType() << " is an animal copied" << std::endl;
 	copy->makeSound();
 	std::cout << std::endl;
-	std::cout << m->getType() << " is a cat" << std::endl;
-	m->makeSound();
+	std::cout << meo->getType() << " is a cat" << std::endl;
+	meo->makeSound();
 	std::cout << std::endl;
-	std::cout << d->getType() << " is a dog" << std::endl;
-	d->makeSound();
+	std::cout << doge->getType() << " is a dog" << std::endl;
+	doge->makeSound();
 	std::cout << std::endl;
 	std::cout << wrong->getType() << " is a wrongAnimal" << std::endl;
 	wrong->makeSound();
@@ -40,16 +40,16 @@ int main(void)
 
 	std::cout << std::endl;
 	// without virtual in animal makeAnoterSound they all use the animal makeAnotherSound
-	a->makeAnotherSound();
+	ani->makeAnotherSound();
 	copy->makeAnotherSound();
-	m->makeAnotherSound();
-	d->makeAnotherSound();
+	meo->makeAnotherSound();
+	doge->makeAnotherSound();
 
 	std::cout << std::endl;
 
-	delete a;
-	delete m;
-	delete d;
+	delete ani;
+	delete meo;
+	delete doge;
 	delete wrong;
 	delete catwrong;
 	delete copy;
