@@ -8,15 +8,24 @@ Character::Character()
 	{
 		this->_inventory[i] = NULL;
 	}
+
+	for (int i = 0; i < 100; i++)
+	{
+		this->_tmp[i] = NULL;
+	}
 }
 
 Character::~Character()
 {
 	//std::cout << "Character destructor called" << std::endl;
-	// destroy inventory
 	for (int i = 0; i < 4; i++)
+	{	if (this->_inventory != NULL)
+			delete this->_inventory[i];
+	}
+	for (int i = 0; i < 100; i++)
 	{
-		delete this->_inventory[i];
+		if (this->_tmp[i] != NULL)
+			delete this->_tmp[i];
 	}
 }
 
@@ -38,6 +47,12 @@ Character &Character::operator=(const Character &rhs)
 				delete this->_inventory[i]; // with this line we perform a deep copy, if this line miss we perform a shallow copy
 			this->_inventory[i] = rhs._inventory[i];
 		}
+		for (int i = 0; i < 100; i++)
+		{
+			if (this->_tmp[i])
+				delete this->_tmp[i]; // with this line we perform a deep copy, if this line miss we perform a shallow copy
+			this->_tmp[i] = rhs._tmp[i];
+		}
 	}
 	return *this;
 }
@@ -48,6 +63,10 @@ Character::Character(std::string name) : _name(name)
 	for (int i = 0; i < 4; i++)
 	{
 		this->_inventory[i] = NULL;
+	}
+	for (int i = 0; i < 100; i++)
+	{
+		this->_tmp[i] = NULL;
 	}
 }
 
@@ -84,10 +103,18 @@ void Character::equip(AMateria *m)
 
 void Character::unequip(int idx)
 {
+	if (idx >= 4 || idx <= -1)
+	{
+		std::cerr << "Wrong index of Materia" << std::endl;
+		return ;
+	}
+	static int j = 0;
 	if (this->_inventory[idx])
 	{
 		std::cout << "Character " << this->getName() << " unequip " << this->getCharacterAMateriaType(idx) << " on slot " << idx << std::endl;
 		// from subject we cant delete AMateria object in the unequip function, but now where is deleted the AMAteria?
+		this->_tmp[j] = this->_inventory[idx];
+		j++;
 		this->_inventory[idx] = NULL;
 	}
 	else
@@ -96,7 +123,7 @@ void Character::unequip(int idx)
 
 void Character::use(int idx, ICharacter &target)
 {
-	if (idx > 5 || idx <= -1)
+	if (idx >= 4 || idx <= -1)
 	{
 		std::cerr << "Wrong index of Materia" << std::endl;
 		return ;

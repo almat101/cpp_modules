@@ -11,6 +11,8 @@ class Character : public ICharacter
 		std::string _name;
 		AMateria* _inventory[4]; // from subject at the construction the inv is empty so is NULL
 
+		AMateria* _tmp[100]; // inventory of Amateria that are unequipped!
+
 	public:
 		Character();
 		Character(std::string); // from subject

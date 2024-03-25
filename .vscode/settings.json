@@ -73,6 +73,8 @@
     "mutex": "cpp",
     "optional": "cpp",
     "ratio": "cpp",
-    "stack": "cpp"
+    "stack": "cpp",
+    "ranges": "cpp",
+    "span": "cpp"
   }
 }
