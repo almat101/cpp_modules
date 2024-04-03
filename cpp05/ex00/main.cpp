@@ -4,23 +4,61 @@ int main(void)
 {
 	try
 	{
-		Bureaucrat b("Boro",1);
-		Bureaucrat c("Cico", 150);
-		Bureaucrat e;
+		Bureaucrat b("",1);
+
+		std::cout << b;
+		b.decrement();
+		std::cout << b;
+		b.decrement();
+		std::cout << b;
+	}
+	//this will catch std::exceptions only
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+
+	try
+	{
+		Bureaucrat c("Cico", 1);
 
 		std::cout << c;
 		c.increment();
 		std::cout << c;
 
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+
+	try
+	{
+		Bureaucrat b("Boro",150);
+
 		std::cout << b;
 		b.decrement();
 		std::cout << b;
 		b.decrement();
 		std::cout << b;
 
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+
+
+	try
+	{
+		Bureaucrat e;
+
 		std::cout << e;
 		e.increment();
 		std::cout << e;
+		e.decrement();
+		std::cout << e;
+
 	}
 	catch (std::exception &e)
 	{
