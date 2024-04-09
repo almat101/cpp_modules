@@ -20,11 +20,14 @@ int main(void)
 
 	try
 	{
-		Bureaucrat c("Cico", 1);
+		Bureaucrat c("Cico", 3);
 
 		std::cout << c;
 		c.increment();
 		std::cout << c;
+		c.increment();
+		std::cout << c;
+		c.increment();
 
 	}
 	catch (std::exception &e)

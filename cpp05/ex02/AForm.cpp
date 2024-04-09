@@ -44,9 +44,9 @@ const char *AForm::GradeTooLowException::what() const throw()
 	return "Form grade too low";
 }
 
-const char *AForm::FormAlreadySigned::what() const throw()
+const char *AForm::FormNotSignedException::what() const throw()
 {
-	return "Form already signed";
+	return "Form is not signed cannot be executed";
 }
 
 const std::string AForm::getName(void) const
@@ -101,8 +101,8 @@ prettier than the other one.
 */
 void AForm::validation(Bureaucrat const & executor) const
 {
-	if (this->getIsSigned())
-		throw AForm::FormAlreadySigned();
-	else if (executor.getGrade() > this->getGradeToExec())
+	if (!this->getIsSigned())
+		throw AForm::FormNotSignedException();
+	if (executor.getGrade() > this->getGradeToExec())
 		throw AForm::GradeTooLowException();
 }

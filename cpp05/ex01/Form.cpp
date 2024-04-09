@@ -80,7 +80,6 @@ parameter. It changes the form status to signed if the bureaucrat’s grade is h
 (higher or egal to the required one). Remember, grade 1 is higher than grade 2.
 If the grade is too low, throw a Form::GradeTooLowException.
 */
-
 void Form::beSigned(Bureaucrat &b)
 {
 	if (b.getGrade() <= this->getGradeToSign())

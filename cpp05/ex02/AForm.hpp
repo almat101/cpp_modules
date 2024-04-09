@@ -39,7 +39,7 @@ class AForm
 			virtual const char *what() const throw();
 		};
 
-		class FormAlreadySigned : public std::exception
+		class FormNotSignedException : public std::exception
 		{
 			virtual const char *what() const throw();
 		};

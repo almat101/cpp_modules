@@ -53,8 +53,6 @@ class AForm
 		//validation function that checks if the form can be executed
 		void validation(Bureaucrat const & executor) const;
 
-		// Member functions to create forms
-		//virtual AForm* createForms(std::string target) const = 0;
 };
 
 std::ostream &operator<<(std::ostream &o, AForm &AForm);

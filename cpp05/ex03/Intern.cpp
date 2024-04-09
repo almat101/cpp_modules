@@ -70,8 +70,6 @@ It will print something like:
 Intern creates <form>
 If the form name passed as parameter doesn’t exist, print an explicit error message.
 */
-
-
 AForm* Intern::makeForm(std::string form_name, std::string target)
 {
 	if (form_name.empty() || target.empty())

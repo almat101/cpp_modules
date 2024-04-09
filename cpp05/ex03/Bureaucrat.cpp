@@ -96,13 +96,6 @@ Implement and turn in some tests to ensure everything works as expected.
 
 void Bureaucrat::signForm(AForm &form)
 {
-	// wrong way we have to check if the form got signed calling the beSigned()
-	// if (form.getIsSigned())
-	// 	std::cout << _name << " signed " << form.getName() << std::endl;
-	// else
-	// 	std::cout << _name << " couldn't sign " << form.getName() << " because has lower grade!" << std::endl;
-
-	// and we have to use exception , in this way we try to call the form.beSigned()
 	try
 	{
 		form.beSigned(*this);
@@ -114,14 +107,14 @@ void Bureaucrat::signForm(AForm &form)
 	}
 }
 
+/*
+It must attempt to execute the form. If it’s successful, print something like:
+<bureaucrat> executed <form>
+If not, print an explicit error message.
+Implement and turn in some tests to ensure everything works as expected.
+*/
 void Bureaucrat::executeForm(AForm const &form)
 {
-	/*
-	It must attempt to execute the form. If it’s successful, print something like:
-	<bureaucrat> executed <form>
-	If not, print an explicit error message.
-	Implement and turn in some tests to ensure everything works as expected.
-	*/
 	try
 	{
 		form.execute(*this);

@@ -9,18 +9,22 @@ int main(void)
 		Form Green = Form("Green", 42, 42);
 
 		Edward.signForm(Green);
+		std::cout << Green;
 	}
 	catch (const std::exception &e)
 	{
 		std::cerr << e.what() << '\n';
 	}
 
+	std::cout << std::endl;
+
 	try
 	{
-		Bureaucrat Edward = Bureaucrat("Edward", 10);
-		Form Black = Form("Black", 3, 42);
+		Bureaucrat Edward = Bureaucrat("Edward", 9);
+		Form Black = Form("Black", 1 , 42);
 
 		Edward.signForm(Black);
+		std::cout << Black;
 	}
 	catch (const std::exception &e)
 	{

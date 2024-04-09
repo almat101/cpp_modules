@@ -16,8 +16,6 @@ class Form
 		const int _gradeToExec;
 		bool _isSigned; //false at construction
 
-
-
 	public:
 		Form();
 		Form(std::string name, int gradeToSign, int gradeToExec);
