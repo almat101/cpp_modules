@@ -19,6 +19,8 @@ struct ConvertedValues
 	bool isDouble;
 	bool isNotDisplayable;
 	bool isStringLike;
+	bool isNan;
+	bool isInf;
 };
 
 class ScalarConverter
@@ -28,12 +30,18 @@ class ScalarConverter
 
 	public:
 		~ScalarConverter();
-		ScalarConverter(const ScalarConverter &src);
-		ScalarConverter & operator=(const ScalarConverter & rhs);
-		static ConvertedValues convert(const std::string& str);
-		static void print(const ConvertedValues& values);
+		ScalarConverter(ScalarConverter &src);
+		ScalarConverter & operator=(ScalarConverter & rhs);
+		static ConvertedValues convert(std::string& str);
+		static void print(ConvertedValues& values);
+		class ImpossibleConversionException : public std::exception
+		{
+			public:
+				virtual const char* what() const throw();
+		};
 };
 
-bool isNumber(const std::string& str);
+std::string isValidScientificNotation(std::string& str);
+bool isNumber(std::string& str);
 
 #endif
