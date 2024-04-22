@@ -6,25 +6,7 @@
 #include <iomanip>
 #include <limits>
 #include <cmath>
-
-struct ConvertedValues
-{
-	char c;
-	int i;
-	float f;
-	double d;
-	bool isChar;
-	bool isInt;
-	bool isFloat;
-	bool isDouble;
-	bool isNotDisplayable;
-	bool isStringLike;
-	bool isNan;
-	bool isInf;
-	bool isInff;
-	bool hasDecimalPoint;
-	bool has2DecimalPoint;
-};
+#include "Utils.hpp"
 
 class ScalarConverter
 {
@@ -38,8 +20,5 @@ class ScalarConverter
 		static ConvertedValues convert(std::string& str);
 		static void print(ConvertedValues& values);
 };
-
-std::string isValidScientificNotation(std::string& str);
-bool isNumber(std::string& str);
 
 #endif
