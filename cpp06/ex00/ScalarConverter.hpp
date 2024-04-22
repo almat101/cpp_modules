@@ -21,6 +21,9 @@ struct ConvertedValues
 	bool isStringLike;
 	bool isNan;
 	bool isInf;
+	bool isInff;
+	bool hasDecimalPoint;
+	bool has2DecimalPoint;
 };
 
 class ScalarConverter
@@ -34,11 +37,6 @@ class ScalarConverter
 		ScalarConverter & operator=(ScalarConverter & rhs);
 		static ConvertedValues convert(std::string& str);
 		static void print(ConvertedValues& values);
-		class ImpossibleConversionException : public std::exception
-		{
-			public:
-				virtual const char* what() const throw();
-		};
 };
 
 std::string isValidScientificNotation(std::string& str);

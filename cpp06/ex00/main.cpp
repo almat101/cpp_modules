@@ -11,16 +11,8 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		try
-		{
-			std::string str = argv[1];
-			ConvertedValues values = ScalarConverter::convert(str);
-			ScalarConverter::print(values);
-		}
-		catch (std::exception &e)
-		{
-			std::cerr << "Error: Invalid argument" << std::endl;
-			return 1;
-		}
+		std::string str = argv[1];
+		ConvertedValues values = ScalarConverter::convert(str);
+		ScalarConverter::print(values);
 	}
 }

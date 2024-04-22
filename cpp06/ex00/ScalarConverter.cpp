@@ -16,10 +16,6 @@ ScalarConverter & ScalarConverter::operator=(ScalarConverter &rhs)
 	return *this;
 }
 
-const char* ScalarConverter::ImpossibleConversionException::what() const throw()
-{
-	return "Error: impossible conversion";
-}
 ConvertedValues ScalarConverter::convert(std::string& str)
 {
 	ConvertedValues values;
@@ -33,12 +29,24 @@ ConvertedValues ScalarConverter::convert(std::string& str)
 	values.isStringLike = false;
 	values.isNan = false;
 	values.isInf = false;
+	values.isInff = false;
+	values.hasDecimalPoint = false;
+	values.has2DecimalPoint = false;
 
 	if (str == "+inf" || str == "-inf" || str == "inf")
 	{
 		// values.isChar = false;
 		// values.isInt= false;
 		values.isInf = true;
+		values.f = std::numeric_limits<float>::infinity();
+		values.d = std::numeric_limits<double>::infinity();
+		return values;
+	}
+	if (str == "+inff" || str == "-inff" || str == "inff")
+	{
+		// values.isChar = false;
+		// values.isInt= false;
+		values.isInff = true;
 		values.f = std::numeric_limits<float>::infinity();
 		values.d = std::numeric_limits<double>::infinity();
 		return values;
@@ -50,22 +58,21 @@ ConvertedValues ScalarConverter::convert(std::string& str)
 		values.d = std::numeric_limits<double>::quiet_NaN();
 		return values;
 	}
-	bool hasDecimalPoint = false;
 	for (size_t i = 0; i < str.length(); ++i)
 	{
 		if (str[i] == '.')
 		{
-			if (hasDecimalPoint) // More than one decimal point means it's not a valid number
+			if (values.hasDecimalPoint) // More than one decimal point means it's not a valid number
 			{
-				std::cout << "str has more than one decimal point" << std::endl;
+				//std::cout << "str has more than one decimal point" << std::endl;
+				values.has2DecimalPoint = true;
 				values.c = '\0';
-				values.isNotDisplayable = true;
-				values.isInt = false;
+				values.i = -2147483648;
 				values.f = std::numeric_limits<float>::quiet_NaN();
 				values.d = std::numeric_limits<double>::quiet_NaN();
 				return values;
 			}
-			hasDecimalPoint = true;
+			values.hasDecimalPoint = true;
 		}
 	}
 	// Check if the string is a valid scientific notation
@@ -87,65 +94,75 @@ ConvertedValues ScalarConverter::convert(std::string& str)
 		return values;
 	}
 	// Check if the string is a float
-	if (hasDecimalPoint)
+	if (values.hasDecimalPoint)
 	{
 		//std::cout << str  << " str is a float" << std::endl;
-		double val;
 		std::istringstream iss(str);
-		iss >> val;
+		iss >> values.d;
 
 		if (iss.fail())
 		{
+			values.isDouble = false;
+			values.isInt = false;
+			values.isNotDisplayable = true;
+			values.i = 0;
+			values.f = std::numeric_limits<float>::infinity();
+			values.d = std::numeric_limits<double>::infinity();
+			values.c = '\0';
 			std::cerr << "Error: double overflow or underflow" << std::endl;
-			throw ImpossibleConversionException();
+			return values;
 		}
-		else
+
+		iss.clear();
+		iss.seekg(0);
+		iss >> values.f;
+		if (iss.fail())
 		{
-			values.d = val;
-			values.f = static_cast<float>(val);
+			values.isFloat = false;
+			values.isInt = false;
+			values.isNotDisplayable = true;
+			values.f = std::numeric_limits<float>::infinity();
+			values.i = 0;
+			values.c = '\0';
+			std::cerr << "Error: float overflow or underflow" << std::endl;
+			return values;
+		}
 
-			//  check for overflow or underflow of float if u want to throw exception when float is - or + inf or not
+		iss.clear();
+		iss.seekg(0);
+		double temp;
+		iss >> temp;
+		if (iss.fail() || temp < -2147483648 || temp > 2147483647)
+		{
+			std::cout << temp << std::endl;
+			values.isInt = false;
+			values.isNotDisplayable = true;
+			values.i = 0;
+			values.c = '\0';
+			std::cerr << "Error: int overflow or underflow" << std::endl;
+			return values;
+		}
+		values.i = static_cast<int>(temp);
 
-			// if (values.f == std::numeric_limits<float>::infinity() || values.f == -std::numeric_limits<float>::infinity())
-			// {
-			// 	std::cerr << "Error: float overflow or underflow" << std::endl;
-			// 	throw ImpossibleConversionException();
-			// }
-			// else
-			// {
-				float rounded = round(values.f);
-
-				// check int overflow or underflow
-				if (rounded < std::numeric_limits<int>::min() || rounded >std::numeric_limits<int>::max())
-				{
-					std::cerr << "Error: int overflow or underflow" << std::endl;
-					throw ImpossibleConversionException();
-				}
-				//std::cout << "rounded: " << rounded << std::endl;
-				int roundedInt = static_cast<int>(rounded);
-				values.i = roundedInt;
-				if (rounded >= 32 && rounded <= 126)
-				{
-					values.c = static_cast<char>(rounded);
-					values.isNotDisplayable = false;
-				}
-				else
-				{
-					values.c = '\0'; // or any other special value
-					values.isNotDisplayable = true;
-				}
-			// }
+		if (values.i >= 32 && values.i <= 126)
+		{
+			values.c = static_cast<char>(values.i);
+			values.isNotDisplayable = false;
+		} else
+		{
+			values.c = '\0';
+			values.isNotDisplayable = true;
 		}
 		return values;
 	}
 	else
 	{
-		//std::cout << str  << " str has no decimal point" << std::endl;
+		//std::cout << str  << " str is an int" << std::endl;
 		//The string is an int
 		if(str.length() == 1 && str[0] >= '0' && str[0] <= '9')
 		{
 			//std::cout << "str is a number between 0 - 9" << std::endl;
-			values.c = '\0'; // or any other special value
+			values.c = '\0';
 			values.isNotDisplayable = true;
 			values.i = str[0] - '0';
 			values.f = str[0] - '0';
@@ -164,62 +181,74 @@ ConvertedValues ScalarConverter::convert(std::string& str)
 		}
 		else if(str.length() > 1)
 		{
-			//std::cout << "str is a number" << std::endl;
+
 			std::istringstream iss(str);
 			double asciiValue;
 			iss >> asciiValue;
-			if (asciiValue > std::numeric_limits<int>::max() || asciiValue < std::numeric_limits<int>::min())
+			if (iss.fail())
 			{
-				std::cerr << "Error: int overflow or underflow" << std::endl;
-				throw ImpossibleConversionException();
+				values.isDouble = false;
+				values.isInt = false;
+				values.isNotDisplayable = true;
+				values.i = 0;
+				values.f = std::numeric_limits<float>::infinity();
+				values.d = std::numeric_limits<double>::infinity();
+				values.c = '\0';
+				std::cerr << "Error: double overflow or underflow" << std::endl;
+				return values;
 			}
-			//std::cout << "asciiValue: " << asciiValue << std::endl;
+			values.d = asciiValue;
+
+			iss.clear();
+			iss.str(str);
+			int iValue;
+			iss >> iValue;
+			if (iss.fail() || iValue > std::numeric_limits<int>::max() || iValue < std::numeric_limits<int>::min())
+			{
+				values.isInt = false;
+				values.isNotDisplayable = true;
+				values.i = 0;
+				values.isInt = false;
+				std::cout << "Error: int overflow or underflow" << std::endl;
+			}
+			else
+			{
+				values.i = iValue;
+			}
 			values.i = static_cast<int>(asciiValue);
 			if(asciiValue >= 0 && asciiValue <= 127 )
 			{
 				if (asciiValue > std::numeric_limits<char>::max() || asciiValue < std::numeric_limits<char>::min())
 				{
 					std::cerr << "Error: char overflow or underflow" << std::endl;
-					throw ImpossibleConversionException();
 				}
 				else
 				{
 					values.c = static_cast<char>(asciiValue);
 				}
-				if (asciiValue > std::numeric_limits<float>::max() || asciiValue < std::numeric_limits<float>::min())
-				{
-					std::cerr << "Error: float overflow or underflow" << std::endl;
-					throw ImpossibleConversionException();
-				}
-				else
-				{
-					values.f = static_cast<float>(asciiValue);
-				}
-				//std::cout << "asciiValue.d: " << asciiValue << std::endl;
-				values.d = static_cast<double>(asciiValue);
-				values.isNotDisplayable = (asciiValue < 32 || asciiValue > 126);
-				return values;
+			}
+
+			iss.clear();
+			iss.str(str);
+			float fValue;
+			iss >> fValue;
+			if (iss.fail() || fValue > std::numeric_limits<float>::max() || fValue < -std::numeric_limits<float>::max())
+			{
+				values.isFloat = false;
+				values.isNotDisplayable = true;
+				values.f = std::numeric_limits<float>::infinity();
+				values.i = -2147483648;
+				std::cerr << "Error: float overflow or underflow" << std::endl;
 			}
 			else
 			{
-				//std::cout << "not displayable" << std::endl;
-				values.isNotDisplayable = true;
+				values.f = fValue;
 			}
+
+			values.isNotDisplayable = (asciiValue < 32 || asciiValue > 126);
+			return values;
 		}
 	}
-	std::stringstream ss1(str);
-	ss1 >> values.c;
-
-
-	// std::stringstream ss2(str);
-	// ss2 >> values.i;
-
-	std::stringstream ss3(str);
-	ss3 >> values.f;
-
-	std::stringstream ss4(str);
-	ss4 >> values.d;
-
 	return values;
 }
 
@@ -228,12 +257,15 @@ void ScalarConverter::print(ConvertedValues& values)
 	//for string like hello
 	if (values.isStringLike)
 	{
-		std::cout << "char: " << "impossible" << std::endl;
-		std::cout << "int: " << "impossible" << std::endl;
-		std::cout << "float: " << "impossible" << std::endl;
-		std::cout << "double: " << "impossible"<< std::endl;
+		std::cout << "Error: impossible conversion" << std::endl;
 		return ;
 	}
+	if (values.has2DecimalPoint)
+	{
+		std::cout << "Error: impossible conversion" << std::endl;
+		return ;
+	}
+
 	//for inf
 	if (values.isInf)
 	{
@@ -243,6 +275,15 @@ void ScalarConverter::print(ConvertedValues& values)
 		std::cout << "double: " << values.d << std::endl;
 		return ;
 	}
+	//for inff
+	if (values.isInff)
+		{
+			std::cout << "char: " << "impossible" << std::endl;
+			std::cout << "int: " << "impossible" << std::endl;
+			std::cout << "float: inff" << std::endl;
+			std::cout << "double: " << values.d << std::endl;
+			return ;
+		}
 	//for nan
 	if (values.isNan)
 	{
@@ -252,14 +293,22 @@ void ScalarConverter::print(ConvertedValues& values)
 		std::cout << "double: " << values.d << std::endl;
 		return ;
 	}
-	// for int float and double
+
 	if (values.isNotDisplayable)
 	{
 		std::cout << "char: " << "Not Displayable" << std::endl;
-		std::cout << "int: " << values.i << std::endl;
-		std::cout << std::fixed << std::setprecision(1);
-		std::cout << "float: " << values.f << "f" << std::endl;
-		std::cout << "double: " << values.d << std::endl;
+		if (values.isInt == false || values.i == -2147483648)
+			std::cout << "int: " << "overflow" << std::endl;
+		else
+			std::cout << "int: " << values.i << std::endl;
+		if (std::isinf(values.f))
+			std::cout << "float: overflow" << std::endl;
+		else
+			std::cout << "float: " << values.f << std::endl;
+		if (std::isinf(values.d))
+				std::cout << "double: overflow" << std::endl;
+		else
+			std::cout << "double: " << values.d << std::endl;
 		return ;
 	}
 	// for char
@@ -276,8 +325,7 @@ std::string isValidScientificNotation(std::string& str)
 
 	if (!modifiedStr.empty() && (modifiedStr.at(modifiedStr.size() - 1) == 'e' || modifiedStr.at(modifiedStr.size() - 1) == 'E'))
 	{
-		throw std::invalid_argument("Error: Invalid argument");
-		//modifiedStr += '0'; // this could be ok but is better to throw an exception because in c++ a number like 1.8e is not a valid scientific notation number
+		modifiedStr += '0'; // Add a zero to the end of the string to make it a valid number
 	}
 
 	return modifiedStr;
@@ -299,7 +347,7 @@ bool isNumber(std::string& str)
 				return false;
 			hasDecimalPoint = true;
 		}
-		else if (*it == 'f')
+		else if (*it == 'f' || *it == 'F')
 		{
 			if (hasF)
 				return false;
