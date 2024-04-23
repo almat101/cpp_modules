@@ -144,7 +144,8 @@ bool str_is_float(std::string& str, ConvertedValues& values)
 		{
 			values.c = static_cast<char>(values.i);
 			values.isNotDisplayable = false;
-		} else
+		}
+		else
 		{
 			values.c = '\0';
 			values.isNotDisplayable = true;
@@ -176,7 +177,7 @@ bool str_is_int(std::string& str, ConvertedValues& values)
 		values.i = str[0];
 		values.f = str[0];
 		values.d = str[0];
-		values.isNotDisplayable = 1;
+		values.isNotDisplayable = (values.i < 32 || values.i > 126);
 		return true;
 	}
 	else if(str.length() > 1)
