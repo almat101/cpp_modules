@@ -21,7 +21,21 @@ void init_bool_value(ConvertedValues& values)
 
 bool init_special_values(ConvertedValues& values, const std::string& str)
 {
-	if (str == "+inf" || str == "-inf" || str == "inf")
+	if (str == "++" || str == "--" || str == "+-" || str == "-+")
+	{
+		values.isStringLike = true;
+		values.isNotDisplayable = true;
+		values.isChar = false;
+		values.isInt = false;
+		values.isFloat = false;
+		values.isDouble = false;
+		values.c = '\0';
+		values.i = 0;
+		values.f = 0.0f;
+		values.d = 0.0;
+		return true;
+	}
+	else if (str == "+inf" || str == "-inf" || str == "inf")
 	{
 		values.isInf = true;
 		values.f = std::numeric_limits<float>::infinity();
@@ -251,16 +265,27 @@ bool str_is_int(std::string& str, ConvertedValues& values)
 	return false;
 }
 
-std::string isValidScientificNotation(std::string& str)
+bool isValidScientificNotation(std::string& str, ConvertedValues& values)
 {
 	std::string modifiedStr = str;
 
-	if (!modifiedStr.empty() && (modifiedStr.at(modifiedStr.size() - 1) == 'e' || modifiedStr.at(modifiedStr.size() - 1) == 'E'))
-	{
-		modifiedStr += '0'; // Add a zero to the end of the string to make it a valid number
-	}
 
-	return modifiedStr;
+	if ((str[0] != 'e' && str [0] != 'E') && (!modifiedStr.empty() && (modifiedStr.at(modifiedStr.size() - 1) == 'e' || modifiedStr.at(modifiedStr.size() - 1) == 'E')))
+	{
+		values.isStringLike = true;
+		values.isNotDisplayable = true;
+		values.isChar = false;
+		values.isInt = false;
+		values.isFloat = false;
+		values.isDouble = false;
+		values.c = '\0';
+		values.i = 0;
+		values.f = 0.0f;
+		values.d = 0.0;
+		return true;
+		
+	}
+	return false;
 }
 
 
@@ -272,8 +297,8 @@ bool isNumber(std::string& str)
 	bool hasSign = false;
 	for (std::string::const_iterator it = str.begin(); it != str.end(); ++it)
 	{
-		if (it == str.begin() && (*it == '+' || *it == '-'))
-			continue;
+		if (it == str.begin() && (*it == '+' || *it == '-') && (*it == 'e' || *it == 'E'))
+			continue ;
 		if (*it == '.')
 		{
 			if (hasDecimalPoint)

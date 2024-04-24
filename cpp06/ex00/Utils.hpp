@@ -29,7 +29,7 @@ bool str_has_2_decimal_point(const std::string &str, ConvertedValues &values);
 bool str_is_int_float_double(std::string &str, ConvertedValues &values);
 bool str_is_float(std::string &str, ConvertedValues &values);
 bool str_is_int(std::string &str, ConvertedValues &values);
-std::string isValidScientificNotation(std::string& str);
+bool isValidScientificNotation(std::string& str, ConvertedValues& values);
 bool isNumber(std::string& str);
 
 

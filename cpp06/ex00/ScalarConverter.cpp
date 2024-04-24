@@ -27,7 +27,9 @@ ConvertedValues ScalarConverter::convert(std::string& str)
 	if (str_has_2_decimal_point(str, values))
 		return values;
 	// Check if the string is a valid scientific notation
-	str = isValidScientificNotation(str);
+	
+	if (isValidScientificNotation(str, values))
+		return values;
 	// Check if the string is a valid number (it can be a float or an int)
 	if (str_is_int_float_double(str, values))
 		return values;
@@ -76,7 +78,7 @@ void ScalarConverter::print(ConvertedValues& values)
 	{
 		std::cout << "char: " << "impossible" << std::endl;
 		std::cout << "int: " << "impossible" << std::endl;
-		std::cout << "float: " << values.f << std::endl;
+		std::cout << "float: " << values.f << 'f' << std::endl;
 		std::cout << "double: " << values.d << std::endl;
 		return ;
 	}
