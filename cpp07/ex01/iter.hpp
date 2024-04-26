@@ -22,14 +22,20 @@ void increment(T & i)
 	++i;
 }
 
-void upperCase(char& i)
+void reverseCase(char& c)
 {
-	i = toupper(i);
+	if (isupper(c))
+		c = static_cast<char>(tolower(c));
+	else
+		c = static_cast<char>(toupper(c));
 }
 
 void appendString(std::string& s)
 {
-	s += " world!";
+	if (s.empty())
+		throw std::invalid_argument("Empty string");
+	else
+		s += "O<_>O";
 }
 
 
