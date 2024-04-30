@@ -5,21 +5,21 @@ int main(void)
 {
 	size_t len = 6;
 	int arr[] = {42,9,0,21,13,39};
-	iter(arr , len , print);
+	iter(arr , len , print<int>);
 
 	float arr3[] = {42.3f,9.4f,0.3f,21.1f,13.2f,39.04f};
-	iter(arr3 , len , print);
+	iter(arr3 , len , print<float>);
 
 	char arr1[] = {'C','I','A','o','n','e'};
-	iter(arr1, len, print);
+	iter(arr1, len, print<char>);
 
 
 	std::string arr2[] = {"Hello","lol","asd","HELL","kek","kkk"};
-	iter(arr2, len, print);
+	iter(arr2, len, print<std::string>);
 
 	std::cout << std::endl;
 	std::cout << "Other operation on arrays: " << std::endl;
-	iter(arr , len , increment);
+	iter(arr , len , increment<int>);
 	for (size_t i = 0; i < len; i++)
 		std::cout << arr[i] << " ";
 	std::cout << std::endl;
@@ -53,9 +53,9 @@ int main(void)
 		std::cerr << e.what() << '\n';
 	}
 
-
-
-
+    std::string stringArray[] = {"apple", "banana", "orange"};
+    std::cout << "\nPrinting the lengths of the strings in stringArray[]:" << std::endl;
+    iter(stringArray, 3, printLength);
 
 
 	return 0;

@@ -9,8 +9,8 @@ void print(T & element)
 	std::cout << element << std::endl;
 }
 
-template<typename T>
-void iter(T *arr, size_t len, void(*func)(T&))
+template<typename T,typename U>
+void iter(T *arr, size_t len, void(*func)(U&))
 {
 	for (size_t i = 0; i < len; i++)
 		func(arr[i]);
@@ -36,6 +36,11 @@ void appendString(std::string& s)
 		throw std::invalid_argument("Empty string");
 	else
 		s += "O<_>O";
+}
+
+void printLength(const std::string& str)
+{
+    std::cout << "Length of string: " << str.length() << std::endl;
 }
 
 
