@@ -5,19 +5,20 @@
 #include <stack>
 #include <deque>
 
-template <typename T>
-class MutantStack : public std::stack<T>
+//stack use deque as underlying container by default
+//with MutantStack class u can use deque(by default) or any type of containers(list,vector ecc)
+template <class T, class under_container = std::deque<T> >
+class MutantStack : public std::stack<T, under_container>
 {
 public:
-	//define iterator type
-	typedef typename std::deque<T>::iterator iterator;
+	typedef typename under_container::iterator iterator;
 
-	MutantStack() : std::stack<T>()
+	MutantStack() : std::stack<T, under_container>()
 	{
 		// std::cout << "Default constructor\n";
 	}
 
-	MutantStack(const MutantStack<T>& src) : std::stack<T>(src)
+	MutantStack(const MutantStack<T>& src) : std::stack<T, under_container>(src)
 	{
 		// std::cout << "Copy constructor\n";
 	}
@@ -26,7 +27,7 @@ public:
 		if (this != &rhs)
 		{
 			// std::cout << "Assignment operator\n";
-			std::stack<T>::operator=(rhs);
+			std::stack<T, under_container>::operator=(rhs);
 		}
 		return *this;
 	}
@@ -35,7 +36,6 @@ public:
 	{
 		// std::cout << "Destructor\n";
 	}
-
 
 	iterator begin() {
 		return this->c.begin();
@@ -48,6 +48,55 @@ public:
 
 #endif
 
+// #ifndef mutantstack_hpp
+// #define mutantstack_hpp
+
+// #include <iostream>
+// #include <stack>
+// #include <deque>
+
+// template <typename T>
+// class MutantStack : public std::stack<T>
+// {
+// public:
+// 	//define iterator type
+// 	typedef typename std::deque<T>::iterator iterator;
+
+// 	MutantStack() : std::stack<T>()
+// 	{
+// 		// std::cout << "Default constructor\n";
+// 	}
+
+// 	MutantStack(const MutantStack<T>& src) : std::stack<T>(src)
+// 	{
+// 		// std::cout << "Copy constructor\n";
+// 	}
+
+// 	MutantStack& operator=(const MutantStack<T>& rhs) {
+// 		if (this != &rhs)
+// 		{
+// 			// std::cout << "Assignment operator\n";
+// 			std::stack<T>::operator=(rhs);
+// 		}
+// 		return *this;
+// 	}
+
+// 	~MutantStack()
+// 	{
+// 		// std::cout << "Destructor\n";
+// 	}
+
+
+// 	iterator begin() {
+// 		return this->c.begin();
+// 	}
+
+// 	iterator end() {
+// 		return this->c.end();
+// 	}
+// };
+
+// #endif
 
 // #ifndef mutantstack_hpp
 // #define mutantstack_hpp

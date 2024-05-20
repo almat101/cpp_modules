@@ -2,6 +2,7 @@
 #include <deque>
 #include <stdlib.h>
 #include <vector>
+#include <list>
 
 int main()
 {
@@ -62,6 +63,70 @@ int main()
 	std::vector<int> s2(mstack2);
 	return 0;
 }
+
+// int main()
+// {
+//     MutantStack<int, std::list<int> > mstack_list;
+
+//     std::cout << "now MutantStack<int,std::list<int> >\n" << std::endl;
+//     mstack_list.push(5);
+//     mstack_list.push(17);
+//     std::cout << mstack_list.top() << std::endl;
+//     mstack_list.pop();
+//     std::cout << mstack_list.size() << std::endl;
+
+//     mstack_list.push(3);
+//     mstack_list.push(5);
+//     mstack_list.push(737);
+//     mstack_list.push(0);
+
+//     MutantStack<int, std::list<int> >::iterator it = mstack_list.begin();
+//     MutantStack<int, std::list<int> >::iterator ite = mstack_list.end();
+
+//     ++it;
+//     --it;
+
+//     while (it != ite)
+//     {
+//         std::cout << *it << std::endl;
+//         ++it;
+//     }
+
+// 	std::stack<int,std::list<int> > s;
+// 	std::cout << "now Stack with std::list\n" << std::endl;
+//     s.push(5);
+//     s.push(17);
+//     std::cout << s.top() << std::endl;
+//     s.pop();
+//     std::cout << s.size() << std::endl;
+
+//     s.push(3);
+//     s.push(5);
+//     s.push(737);
+//     s.push(0);
+// 	//stack is lifo and has no iterator
+// 	std::stack<int, std::list<int> > s_copy = s;
+// 	while (!s_copy.empty())
+// 	{
+
+// 		std::cout << s_copy.top() << std::endl;
+// 		s_copy.pop();
+// 	}
+
+//     // std::stack<int, std::list<int> >::iterator it = s.begin();
+//     // std::stack<int, std::list<int> >::iterator ite = s.end();
+
+//     // ++it;
+//     // --it;
+
+//     // while (it != ite)
+//     // {
+//     //     std::cout << *it << std::endl;
+//     //     ++it;
+//     // }
+
+//     return 0;
+// }
 
 // int main() {
 
