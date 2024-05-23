@@ -10,6 +10,21 @@ BitcoinExchange::~BitcoinExchange()
 	// std::cout << "Default destuctor\n";
 }
 
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &src)
+{
+	*this = src;
+}
+
+BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange &rhs)
+{
+	if (this != &rhs)
+	{
+		this->_btc_values = rhs._btc_values;
+		this->_input_value = rhs._input_value;
+	}
+	return *this;
+}
+
 
 	void BitcoinExchange::readValues()
 	{

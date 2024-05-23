@@ -18,6 +18,8 @@ class BitcoinExchange
 	public:
 		BitcoinExchange();
 		~BitcoinExchange();
+		BitcoinExchange(const BitcoinExchange &src);
+		BitcoinExchange & operator=(const BitcoinExchange &rhs);
 		void readInputValues(std::string input_file);
 		void readValues();
 		void computeValues();
