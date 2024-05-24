@@ -14,27 +14,30 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
-			std::stack<int, std::list<int>> myStack;
+		std::stack<int, std::list<int>> myStack;
 		std::stringstream ss(argv[1]);
 		char ch;
+		int counterOp = 0;
+		int pushed = 0;
 
 		while (ss.get(ch))
 		{
+			if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
+			{
+				counterOp++;
+			}
 			if (!isdigit(ch) && ch != '+' && ch != '-' && ch != '*' && ch != '/' && isspace(ch) == 0)
 			{
 				std::cout << "Invalid character: " << ch << std::endl;
 				return 1;
 			}
-			if (isdigit(ch))// && myStack.size() <= 2)
+
+			if (isdigit(ch))
 			{
 				myStack.push(ch - '0');  // Convert from char to int
-				//std::cout << "Pushed: " << ch << std::endl;
+				pushed++;
+				std::cout << "Pushed: " << ch << std::endl;
 			}
-			// else if (myStack.size() > 2 )
-			// {
-			// 	std::cout << "Error \n";
-			// 	return 1;
-			// }
 			else if (ch == '+' && myStack.size() >= 2)
 			{
 				int num2 = myStack.top();
@@ -91,21 +94,23 @@ int main(int argc, char* argv[])
 				std::cout << "/ result: " << result << std::endl;
 				myStack.push(result);
 			}
-			// else
-			// {
-			// 	std::cout << "char is" << ch << std::endl;
-			// 	std::cout << "Invalid character: " << ch << std::endl;
-			// 	return 1;
-			// }
-			// Add more else if blocks here for other operators
 		}
-		if (!myStack.empty() && myStack.size() == 1)
+		if (myStack.size() == 1 && counterOp < pushed)
 		{
-			std::cout << "Result: " << myStack.top() << std::endl;
+			std::cout << myStack.top() << std::endl;
 		}
 		else
 		{
-			std::cout << "Stack error" << std::endl;
+			std::cerr << "Stack error" << std::endl;
+			while (myStack.top())
+			{
+				std::cerr << "Stack is composed by '" << myStack.top() << "' " << std::endl;
+				myStack.pop();
+			}
+
+			std::cerr << "last ch is " << ch << std::endl;
+			std::cerr << "counterOp of op is " << counterOp << std::endl;
+			std::cerr << "pushed in the stack are " << pushed << std::endl;
 			return 1;
 		}
 	}
