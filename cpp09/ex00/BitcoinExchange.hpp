@@ -12,7 +12,7 @@ class BitcoinExchange
 {
 	private:
 		std::multimap<std::string, float> _btc_values; // first multimap that contain the values of the data.csv
-		std::multimap<std::string, float> _input_value; // second multimap that contain the values of the input.txt
+		std::multimap<std::string, float> _input_values; // second multimap that contain the values of the input.txt
 
 
 	public:

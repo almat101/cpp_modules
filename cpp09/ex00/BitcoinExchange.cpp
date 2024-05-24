@@ -20,7 +20,7 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange &rhs)
 	if (this != &rhs)
 	{
 		this->_btc_values = rhs._btc_values;
-		this->_input_value = rhs._input_value;
+		this->_input_values = rhs._input_values;
 	}
 	return *this;
 }
@@ -129,8 +129,8 @@ void BitcoinExchange::readInputValues(std::string input_file)
 			continue ;
 		}
 
-		//insert the values in the multimap _input_value
-		_input_value.insert(std::make_pair(key, value));
+		//insert the values in the multimap _input_values
+		_input_values.insert(std::make_pair(key, value));
 	}
 
 
@@ -148,7 +148,7 @@ std::string trim(const std::string& str)
 }
 void BitcoinExchange::computeValues()
 {
-	for (std::multimap<std::string, float>::reverse_iterator it = _input_value.rbegin(); it != _input_value.rend(); ++it)
+	for (std::multimap<std::string, float>::reverse_iterator it = _input_values.rbegin(); it != _input_values.rend(); ++it)
 	{
 		std::string key1 = trim(it->first);
 
@@ -178,8 +178,8 @@ void BitcoinExchange::printmultimaps()
 		std::cout << it->first << " " << it->second << std::endl;
 	}
 
-	std::cout << "Printing _input_value" << std::endl;
-	for (std::multimap<std::string, float>::iterator it = _input_value.begin(); it != _input_value.end(); ++it)
+	std::cout << "Printing _input_values" << std::endl;
+	for (std::multimap<std::string, float>::iterator it = _input_values.begin(); it != _input_values.end(); ++it)
 	{
 		std::cout << it->first << " " << it->second << std::endl;
 	}
