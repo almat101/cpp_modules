@@ -19,7 +19,7 @@ Character::~Character()
 {
 	//std::cout << "Character destructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
-	{	if (this->_inventory != NULL)
+	{	if (this->_inventory[i] != NULL)
 			delete this->_inventory[i];
 	}
 	for (int i = 0; i < 100; i++)

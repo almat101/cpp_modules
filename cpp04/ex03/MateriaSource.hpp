@@ -8,7 +8,7 @@ class MateriaSource : public IMateriaSource
 {
 	protected:
 		AMateria *_materiaSourceInventory[4];
-		std::string _type;
+		//std::string _type;
 
 	public:
 		MateriaSource();
