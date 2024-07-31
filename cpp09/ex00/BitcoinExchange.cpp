@@ -79,7 +79,7 @@ void BitcoinExchange::readInputValues(std::string input_file)
 			continue ;
 		}
 
-		 // Date validation starts here
+		// Date validation starts here
 		std::string year_str, month_str, day_str;
 		std::istringstream date_iss(key);
 		std::getline(date_iss, year_str, '-');
