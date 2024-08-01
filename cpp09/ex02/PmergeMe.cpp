@@ -14,8 +14,6 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& rhs){
 	if (this != &rhs){
 		_unordered_vector = rhs._unordered_vector;
 		_first_pair = rhs._first_pair;
-		_main_chain = rhs._main_chain;
-		_pend_chain = rhs._pend_chain;
 		_main_chain_vector = rhs._main_chain_vector;
 		_pend_chain_vector = rhs._pend_chain_vector;
 		_vector_odd = rhs._vector_odd;
@@ -29,14 +27,6 @@ std::vector<int>& PmergeMe::getUnorderedVector(){
 
 std::vector<std::pair<int, int> >& PmergeMe::getFirstPair(){
 	return _first_pair;
-}
-
-std::vector<std::pair<int, int> >& PmergeMe::getMainChain(){
-	return _main_chain;
-}
-
-std::vector<std::pair<int, int> >& PmergeMe::getPendChain(){
-	return _pend_chain;
 }
 
 std::vector<int>& PmergeMe::getMainChainVector(){
@@ -170,31 +160,27 @@ void PmergeMe::processPairs() {
 	}
 }
 
-/**
- * @brief Generates a Jacobsthal sequence of length n.
- *
- * This function generates a Jacobsthal sequence, which is a sequence of integers defined by the recurrence relation:
- * - J(0) = 0
- * - J(1) = 1
- * - J(n) = J(n-1) + 2 * J(n-2) for n >= 2
- *
- * The generated sequence is stored in a vector and returned.
- *
- * @param n The length of the Jacobsthal sequence to generate.
- * @return std::vector<int> The generated Jacobsthal sequence.
- */
-std::vector<int> PmergeMe::generateJacobSequence(int n) {
-	std::vector<int> jacobSequence;
-	if (n >= 1) jacobSequence.push_back(0);
-	if (n >= 2) jacobSequence.push_back(1);
-
-	for (int i = 2; i < n; ++i) {
-		int next = jacobSequence[i - 1] + 2 * jacobSequence[i - 2];
-		jacobSequence.push_back(next);
-	}
-	return jacobSequence;
+int PmergeMe::jacobsthal(int n) {
+    return ((1ull << n) - ((n % 2) ? -1 : 1)) / 3;
 }
 
+std::vector<int> PmergeMe::generateJacobSequence(std::vector<int>& array) {
+		int len = array.size();
+		std::vector<int> sequence;
+		int jacob_index = 3;
+
+		// Loop through and create the sequence
+		while (jacobsthal(jacob_index) < len - 1) {
+			sequence.push_back(jacobsthal(jacob_index));
+			jacob_index += 1;
+		}
+
+		return sequence;
+}
+
+void PmergeMe::insertFirstPend(){
+	_main_chain_vector.insert( _main_chain_vector.begin(),_pend_chain_vector[0]);
+}
 
 /**
  * @brief Merges items from the pending vector into the main vector using a Jacobsthal insertion sequence.
@@ -207,19 +193,14 @@ std::vector<int> PmergeMe::generateJacobSequence(int n) {
  * @param main The main vector where elements are merged into.
  */
 void PmergeMe::merge_items(std::vector<int>& pend, std::vector<int>& jacob_insertion_sequence, std::vector<int>& main) {
-	// Insert the first element of pend into the beginning of main
-	main.insert(main.begin(), pend[0]);
-
-	// Initialize the index sequence with the first index
+	insertFirstPend();
 	std::vector<int> indexSequence;
 	indexSequence.push_back(1);
 
-	size_t iterator = 1; // iterator is 1 because we already inserted the first element
-
+	size_t iterator = 1;
 	// Iterate over the pend vector to merge elements into main
 	while (iterator <= pend.size())
 	{
-
 		int item;
 		// Check if the Jacobsthal insertion sequence is not empty
 		if (!jacob_insertion_sequence.empty()) {
@@ -242,7 +223,7 @@ void PmergeMe::merge_items(std::vector<int>& pend, std::vector<int>& jacob_inser
 		std::vector<int>::iterator binary_insertion_point = std::lower_bound(main.begin(), main.end(), item);
 		main.insert(binary_insertion_point, item);
 
-		iterator++;
+		// iterator++; //commented out because it prevent the insertion of the second element of pend
 	}
 
 	// If there is an odd element, insert it into the main vector
@@ -267,7 +248,6 @@ void PmergeMe::insert_odd_element(std::vector<int>& main, int odd) {
 		main.insert(insertion_point, odd);
 	}
 }
-
 
 void PmergeMe::printVector(std::vector<int>& vec){
 	for (size_t i = 0; i < vec.size(); ++i) {

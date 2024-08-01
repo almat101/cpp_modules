@@ -23,16 +23,15 @@ class PmergeMe {
 		std::vector<std::pair<int, int> >& getFirstPair();
 		std::vector<int>& getMainChainVector();
 		std::vector<int>& getPendChainVector();
-		std::vector<std::pair<int, int> >& getMainChain();
-		std::vector<std::pair<int, int> >& getPendChain();
 
 		void validation(char **argv);
 		void create_pair();
 		void processPairs();
 		void merge_items(std::vector<int>& pend, std::vector<int>& jacob_sequence,std::vector<int>& main);
 		void insert_odd_element(std::vector<int>& main_chain, int rest);
-		std::vector<int> generateJacobSequence(int n);
-
+		std::vector<int> generateJacobSequence(std::vector<int>& array);
+		int jacobsthal(int n);
+		void insertFirstPend();
 
 
 
@@ -66,12 +65,8 @@ class PmergeMe {
 	private:
 		std::vector<int> _unordered_vector;
 		std::vector<std::pair<int, int> > _first_pair;
-
-		std::vector<std::pair<int, int> > _main_chain;
 		std::vector<int> _main_chain_vector;
-		std::vector<std::pair<int, int> > _pend_chain;
 		std::vector<int> _pend_chain_vector;
-
 		int _vector_odd;
 };
 
