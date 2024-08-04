@@ -25,8 +25,6 @@ class PmergeMe {
 		std::vector<int>& getUnorderedVector();
 
 		void validation(char **argv);
-		// void create_pair();
-		// void create_vectors();
 		void processPairs();
 		void merge_items(std::vector<int>& pend, std::vector<int>& jacob_sequence,std::vector<int>& main);
 		void insert_odd_element(std::vector<int>& main_chain, int rest);

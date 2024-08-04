@@ -81,25 +81,49 @@ int PmergeMe::jacobsthal(int n) {
     return static_cast<int>(round((pow(2, n) + pow(-1, n - 1)) / 3));
 }
 
-// Function to get the pending element order
+/**
+ * @brief Creates the Jacobsthal order for a given number.
+ *
+ * This function generates a sequence of indices based on Jacobsthal numbers up to the given number `n`.
+ * The Jacobsthal numbers are used to determine the order in which elements are processed.
+ * The function performs the following steps:
+ * - Generates Jacobsthal numbers until the number exceeds `n`.
+ * - Adds `n` to the list of Jacobsthal numbers.
+ * - Creates the order based on the Jacobsthal numbers.
+ *
+ * The generated order is used in the Ford-Johnson sorting algorithm to determine the sequence of element processing.
+ *
+ * @param n The number up to which Jacobsthal numbers are generated.
+ * @return A vector of integers representing the order based on Jacobsthal numbers.
+ */
 std::vector<int> PmergeMe::create_jacob_order(int n) {
-    std::vector<int> jacobsthal_numbers;
-    for (int i = 0; ; ++i) {
-        int j = jacobsthal(i);
-        if (j > n) break;
-        jacobsthal_numbers.push_back(j);
-    }
-    jacobsthal_numbers.push_back(n);
-    std::vector<int> order;
-    for (size_t i = 1; i < jacobsthal_numbers.size(); ++i) {
-        for (int j = jacobsthal_numbers[i]; j > jacobsthal_numbers[i - 1]; --j) {
-            order.push_back(j - 1);
-        }
-    }
-    return order;
+	std::vector<int> jacobsthal_numbers;
+	for (int i = 0; ; ++i) {
+		int j = jacobsthal(i);
+		if (j > n) break;
+		jacobsthal_numbers.push_back(j);
+	}
+	jacobsthal_numbers.push_back(n);
+	std::vector<int> order;
+	for (size_t i = 1; i < jacobsthal_numbers.size(); ++i) {
+		for (int j = jacobsthal_numbers[i]; j > jacobsthal_numbers[i - 1]; --j) {
+			order.push_back(j - 1);
+		}
+	}
+	return order;
 }
 
-// Function to find the binary search insertion point
+/**
+ * @brief Finds the insertion point for a given number in a sorted vector using binary search.
+ *
+ * This function performs a binary search on a sorted vector to find the appropriate insertion point for the given number `n`.
+ * If the number is found in the vector, its index is returned. If the number is not found, the function returns the index
+ * where the number should be inserted to maintain the sorted order.
+ *
+ * @param coll The sorted vector in which to search for the insertion point.
+ * @param n The number for which to find the insertion point.
+ * @return The index at which the number should be inserted.
+ */
 int PmergeMe::binary_search_insertion_point(const std::vector<int>& coll, int n) {
 	int lower_bound = 0;
 	int upper_bound = coll.size() - 1;
@@ -117,7 +141,21 @@ int PmergeMe::binary_search_insertion_point(const std::vector<int>& coll, int n)
 	return lower_bound;
 }
 
-// Function to insert an element into a vector at a specific index
+/**
+ * @brief Inserts a number into a specified position in a vector.
+ *
+ * This function creates a new vector by inserting the given number `n` at the specified index `i` in the input vector `coll`.
+ * The function performs the following steps:
+ * - Reserves space in the result vector to accommodate the new element.
+ * - Copies elements from the beginning of the input vector up to the insertion point.
+ * - Inserts the new element at the specified position.
+ * - Copies the remaining elements from the input vector after the insertion point.
+ *
+ * @param coll The input vector in which to insert the number.
+ * @param n The number to be inserted.
+ * @param i The index at which to insert the number.
+ * @return A new vector with the number inserted at the specified position.
+ */
 std::vector<int> PmergeMe::insert(const std::vector<int>& coll, int n, int i) {
 	std::vector<int> result;
 	result.reserve(coll.size() + 1);
@@ -137,7 +175,17 @@ std::vector<int> PmergeMe::insert(const std::vector<int>& coll, int n, int i) {
 bool compare_pairs(const std::pair<int, int>& a, const std::pair<int, int>& b) {
 	return a.first < b.first;
 }
-// Function to sort pairs using lower_bound without lambda expressions
+
+/**
+ * @brief Sorts a vector of pairs using insertion sort with binary search.
+ *
+ * This function sorts a vector of pairs using an insertion sort algorithm combined with binary search.
+ * It iterates through each pair in the input vector `sorted_pairs` and inserts it into the correct position
+ * in the `sorted_pairs_sorted` vector using binary search to find the insertion point.
+ *
+ * @param sorted_pairs The input vector of pairs to be sorted.
+ * @return A new vector of pairs sorted in ascending order.
+ */
 std::vector<std::pair<int, int> > PmergeMe::sort_pairs(const std::vector<std::pair<int, int> >& sorted_pairs) {
 	std::vector<std::pair<int, int> > sorted_pairs_sorted;
 	for (size_t i = 0; i < sorted_pairs.size(); ++i) {
@@ -148,7 +196,23 @@ std::vector<std::pair<int, int> > PmergeMe::sort_pairs(const std::vector<std::pa
 	return sorted_pairs_sorted;
 }
 
-// Example usage in the merge_insertion_sort function
+
+/**
+ * @brief Sorts a vector using a merge-insertion sort algorithm.
+ *
+ * This function sorts the input vector `coll` using a merge-insertion sort algorithm.
+ * It performs the following steps:
+ * - If the input vector has fewer than 2 elements, it returns the input vector as it is already sorted.
+ * - Pairs adjacent elements and sorts each pair.
+ * - Sorts the pairs using the `sort_pairs` function.
+ * - Separates the sorted pairs into a main chain and pending elements.
+ * - If the input vector has an odd number of elements, the last element is added to the pending elements.
+ * - Creates a Jacobsthal order for the pending elements.
+ * - Inserts each pending element into the main chain using binary search to find the insertion point.
+ *
+ * @param coll The input vector to be sorted.
+ * @return A new vector sorted in ascending order.
+ */
 std::vector<int> PmergeMe::merge_insertion_sort(const std::vector<int>& coll) {
 	if (coll.size() < 2) return coll;
 
@@ -160,10 +224,7 @@ std::vector<int> PmergeMe::merge_insertion_sort(const std::vector<int>& coll) {
 			first_pairs_sort.push_back(std::make_pair(coll[i + 1], coll[i]));
 		}
 	}
-
-	// Use the sort_pairs function to sort the pairs
 	std::vector<std::pair<int, int> > sorted_pairs = sort_pairs(first_pairs_sort);
-
 
 	std::vector<int> main_chain;
 	std::vector<int> pending_elements;
