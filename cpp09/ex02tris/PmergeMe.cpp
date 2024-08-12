@@ -113,6 +113,14 @@ void PmergeMe::validationDeque(char **argv) {
 }
 
 
+/**
+ * @brief Extracts pairs from the input vector and returns them as a vector of pairs.
+ *
+ * This function takes an input vector and extracts pairs of elements from it. If the size of the input vector is odd, the last element is considered as an odd element and is stored separately. The extracted pairs are then stored in a vector of pairs and returned.
+ *
+ * @param input_vector The input vector from which pairs are to be extracted.
+ * @return std::vector<std::pair<int, int>> The vector of pairs extracted from the input vector.
+ */
 std::vector<std::pair<int, int> >  PmergeMe::first_step(std::vector<int>& input_vector)
 {
 	// int i = 1;
@@ -131,8 +139,6 @@ std::vector<std::pair<int, int> >  PmergeMe::first_step(std::vector<int>& input_
 	{
 		pairs.push_back(std::make_pair(input_vector[i], input_vector[i + 1]));
 	}
-	// printVectorOfPairs(pairs);
-	// recursion(pairs,i);
 	return pairs;
 }
 
@@ -156,89 +162,66 @@ std::deque<std::pair<int, int> >  PmergeMe::first_step_deque(std::deque<int>& in
 		pairs.push_back(std::make_pair(input_deque[i], input_deque[i + 1]));
 	}
 	// printdequeOfPairs(pairs);
-	// recursion(pairs,i);
 	return pairs;
 }
 
+/**
+ * @brief Performs a recursive operation on a vector of pairs.
+ *
+ * This function takes a vector of pairs and performs a recursive operation on it.
+ * It sorts the pairs and extracts the largest value. If the size of the vector is 1, it returns the sorted pairs.
+ * Otherwise, it creates new pairs for the next recursion and makes a recursive call with the new pairs.
+ * Finally, it inserts the elements from the pend_chain vector into the main_chain vector in a specific order.
+ *
+ * @param pairs A vector of pairs to perform the recursive operation on.
+ * @param i A reference to an integer representing the recursion level.
+ * @return A vector of integers representing the result of the recursive operation.
+ */
 std::vector<int> PmergeMe::recursion(std::vector<std::pair<int, int> >& pairs, int &i)
 {
 	// std::cout << "recursion level " << i << std::endl;
 	i++;
-	// std::cout << "before recursion pair is" << std::endl;
-	// printVectorOfPairs(pairs);
-	// main chain is the sorted pair from last recursion
+
    	std::vector<int> main_chain;
-	//pend chain go back to precedent recursion step and insert the element that are not in main_chain
 	std::vector<int> pend_chain;
+	//exit recursion when pair size is 1
     if (pairs.size() == 1)
     {
-		// printVectorOfPairs(pairs);
 		for (std::vector<std::pair<int, int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
 		{
 			std::pair<int, int>& pair = *it;
 			if (pair.first > pair.second)
 			{
-				// std::cout << pair.first << " e " << pair.second << std::endl;
-				std::swap(pair.first, pair.second); // Ensure pair.first <= pair.second
-				// std::cout << pair.first << " e " << pair.second << std::endl;
+				std::swap(pair.first, pair.second);
 			}
-			// std::cout << "main chain is now and im in last recursion level: " << std::endl;
 			main_chain.push_back(pair.first);
 			main_chain.push_back(pair.second);
-			// std::cout << std::endl;
 		}
 		// printVector(main_chain);
-		// printVectorOfPairs(pairs);
 		if (_odd != -1)
 		{
-			// std::cout << "insert odd if present" << std::endl;
 			std::vector<int>::iterator pos = std::lower_bound(main_chain.begin(), main_chain.end(), _odd);
 			main_chain.insert(pos, _odd);
 		}
-        // int largest = std::max(pairs[0].first, pairs[0].second);
-        // std::cout << "Largest value: " << largest << std::endl;
-		// std::cout << "ritorno main chain che e' " << std::endl;
 		// printVector(main_chain);
         return main_chain;
     }
 
     // Sort the pairs and extract the largest value
-    // std::vector<int> pre_chain;
-	// std::cout << "sort pair " <<std:: endl;
 	for (std::vector<std::pair<int, int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
 	{
 		std::pair<int, int>& pair = *it;
 		if (pair.first > pair.second)
 		{
-			// std::cout << pair.first << " e " << pair.second << std::endl;
-			std::swap(pair.first, pair.second); // Ensure pair.first <= pair.second
-			// std::cout << "first element is " << pair.first << " and  " << pair.second << std::endl;
-			// pend_chain.push_back(pair.first);
+			std::swap(pair.first, pair.second);
 		}
-		// std::cout <<std::endl;
-		// std::cout << " first el of pair is " << pair.first << std::endl;
-		// if (std::find(pend_chain.begin(), pend_chain.end(), pair.first) == pend_chain.end())
-		// {
-			// std::cout << "pushing first to pend chain " << std::endl;
-			pend_chain.push_back(pair.first);
-			// std::cout << "now pend is ";
-			// printVector(pend_chain);
-		// 	std::cout << std::endl;
-		// }
-		// else
-		// {
-		// 	std::cout << "first element is already in pend chain " << std::endl;
-		// }
-
-		// pend_chain.push_back(pair.first);
-		// std::cout << " main chain ? " << std::endl;
-		// printVector(main_chain);
+		pend_chain.push_back(pair.first);
+		// std::cout << "now pend is ";
+		// printVector(pend_chain);
     }
 
-    //Print the sorted pairs
     // Create new pairs for the next recursion
 	// std::cout << " create new pair for the next recursion " << std::endl;
-
     std::vector<std::pair<int, int> > new_pairs;
 
     for (size_t i = 0; i < pairs.size(); i += 2)
@@ -246,28 +229,17 @@ std::vector<int> PmergeMe::recursion(std::vector<std::pair<int, int> >& pairs, i
 
         if (i + 1 < pairs.size())
         {
-			// std::cout << "ramo if " << std::endl;
             new_pairs.push_back(std::make_pair(pairs[i].second, pairs[i + 1].second));
         }
         else
         {
-			// std::cout << "ramo else " << std::endl;
-            // new_pairs.push_back(pairs[i]);
-			main_chain.push_back(pairs[i].first);
+			// main_chain.push_back(pairs[i].first);// this is not needed
 			pend_chain.push_back(pairs[i].second);
         }
 	}
-    // printVectorOfPairs(new_pairs);
-
     // Recursive call
 	// std::cout << "recursive call " << std::endl;
     main_chain = recursion(new_pairs, i);
-	// std::cout << "after all recursion i am here this is main chain " << std::endl;
-	// printVector(main_chain);
-	// std::cout << "pend chain is " << std::endl;
-	// printVector(pend_chain);
-
-
 
 	// for (std::vector<int>::const_iterator it = pend_chain.begin(); it != pend_chain.end(); ++it)
 	// {
@@ -284,28 +256,27 @@ std::vector<int> PmergeMe::recursion(std::vector<std::pair<int, int> >& pairs, i
 		main_chain = insert(main_chain, item, insert_index);
 	}
 
-	// std::cout << "main chain after all insert" << std::endl;
-	// printVector(main_chain);
-
-	// std::cout << "pend chain after all recursion: " << std::endl;
-	// printVector(pend_chain);
-	// printVectorOfPairs(pairs);
-
-	// printVectorOdd();
 	return main_chain;
 }
 
 
 //recursion for deque
+/**
+ * @brief Recursively merges pairs of integers in a deque.
+ *
+ * This function takes a deque of pairs of integers and recursively merges them into a single deque.
+ * The merging process involves sorting the pairs and extracting the largest value from each pair.
+ * The function continues to merge the remaining pairs until only one pair is left.
+ *
+ * @param pairs The deque of pairs of integers to be merged.
+ * @param i A reference to an integer representing the recursion level.
+ * @return A deque of integers containing the merged pairs.
+ */
 std::deque<int> PmergeMe::recursion_deque(std::deque<std::pair<int, int> >& pairs, int &i)
 {
 	// std::cout << "recursion level " << i << std::endl;
 	i++;
-	// std::cout << "before recursion pair is" << std::endl;
-	// printVectorOfPairs(pairs);
-	// main chain is the sorted pair from last recursion
    	std::deque<int> main_chain;
-	//pend chain go back to precedent recursion step and insert the element that are not in main_chain
 	std::deque<int> pend_chain;
     if (pairs.size() == 1)
     {
@@ -315,96 +286,56 @@ std::deque<int> PmergeMe::recursion_deque(std::deque<std::pair<int, int> >& pair
 			std::pair<int, int>& pair = *it;
 			if (pair.first > pair.second)
 			{
-				// std::cout << pair.first << " e " << pair.second << std::endl;
-				std::swap(pair.first, pair.second); // Ensure pair.first <= pair.second
-				// std::cout << pair.first << " e " << pair.second << std::endl;
+
+				std::swap(pair.first, pair.second);
 			}
-			// std::cout << "main chain is now and im in last recursion level: " << std::endl;
 			main_chain.push_back(pair.first);
 			main_chain.push_back(pair.second);
-			// std::cout << std::endl;
 		}
 		// printVector(main_chain);
-		// printVectorOfPairs(pairs);
 		if (_odd != -1)
 		{
-			// std::cout << "insert odd if present" << std::endl;
 			std::deque<int>::iterator pos = std::lower_bound(main_chain.begin(), main_chain.end(), _odd);
 			main_chain.insert(pos, _odd);
 		}
-        // int largest = std::max(pairs[0].first, pairs[0].second);
-        // std::cout << "Largest value: " << largest << std::endl;
 		// std::cout << "ritorno main chain che e' " << std::endl;
 		// printVector(main_chain);
         return main_chain;
     }
 
     // Sort the pairs and extract the largest value
-    // std::deque<int> pre_chain;
-	// std::cout << "sort pair " <<std:: endl;
 	for (std::deque<std::pair<int, int> >::iterator it = pairs.begin(); it != pairs.end(); ++it)
 	{
 		std::pair<int, int>& pair = *it;
 		if (pair.first > pair.second)
 		{
-			// std::cout << pair.first << " e " << pair.second << std::endl;
-			std::swap(pair.first, pair.second); // Ensure pair.first <= pair.second
-			// std::cout << "first element is " << pair.first << " and  " << pair.second << std::endl;
-			// pend_chain.push_back(pair.first);
-		}
-		// std::cout <<std::endl;
-		// std::cout << " first el of pair is " << pair.first << std::endl;
-		// if (std::find(pend_chain.begin(), pend_chain.end(), pair.first) == pend_chain.end())
-		// {
-			// std::cout << "pushing first to pend chain " << std::endl;
-			pend_chain.push_back(pair.first);
-			// std::cout << "now pend is ";
-			// printVector(pend_chain);
-		// 	std::cout << std::endl;
-		// }
-		// else
-		// {
-		// 	std::cout << "first element is already in pend chain " << std::endl;
-		// }
+			std::swap(pair.first, pair.second);
 
-		// pend_chain.push_back(pair.first);
-		// std::cout << " main chain ? " << std::endl;
-		// printVector(main_chain);
+		}
+		pend_chain.push_back(pair.first);
+		// std::cout << "now pend is ";
+		// printVector(pend_chain);
     }
 
-    //Print the sorted pairs
     // Create new pairs for the next recursion
-	// std::cout << " create new pair for the next recursion " << std::endl;
-
     std::deque<std::pair<int, int> > new_pairs;
-
     for (size_t i = 0; i < pairs.size(); i += 2)
     {
 
         if (i + 1 < pairs.size())
         {
-			// std::cout << "ramo if " << std::endl;
             new_pairs.push_back(std::make_pair(pairs[i].second, pairs[i + 1].second));
         }
         else
         {
-			// std::cout << "ramo else " << std::endl;
-            // new_pairs.push_back(pairs[i]);
-			main_chain.push_back(pairs[i].first);
+			// main_chain.push_back(pairs[i].first); not necessary
 			pend_chain.push_back(pairs[i].second);
         }
 	}
-    // printVectorOfPairs(new_pairs);
 
     // Recursive call
 	// std::cout << "recursive call " << std::endl;
     main_chain = recursion_deque(new_pairs, i);
-	// std::cout << "after all recursion i am here this is main chain " << std::endl;
-	// printVector(main_chain);
-	// std::cout << "pend chain is " << std::endl;
-	// printVector(pend_chain);
-
-
 
 	// for (std::deque<int>::const_iterator it = pend_chain.begin(); it != pend_chain.end(); ++it)
 	// {
@@ -412,7 +343,6 @@ std::deque<int> PmergeMe::recursion_deque(std::deque<std::pair<int, int> >& pair
 	// 	std::deque<int>::iterator pos = std::lower_bound(main_chain.begin(), main_chain.end(), elem);
 	// 	main_chain.insert(pos, elem);
 	// }
-
 	std::deque<int> order = create_jacob_order_deque(pend_chain.size());
 	for (size_t i = 0; i < order.size(); ++i) {
 		int b_index = order[i];
@@ -421,17 +351,19 @@ std::deque<int> PmergeMe::recursion_deque(std::deque<std::pair<int, int> >& pair
 		main_chain = insert_deque(main_chain, item, insert_index);
 	}
 
-	// std::cout << "main chain after all insert" << std::endl;
-	// printDeque(main_chain);
-
-	// std::cout << "pend chain after all recursion: " << std::endl;
-	// printDeque(pend_chain);
-	// printVectorOfPairs(pairs);
-
-	// printVectorOdd();
 	return main_chain;
 }
 
+/**
+ * @brief Creates a Jacobsthal order for a given number.
+ *
+ * This function generates a Jacobsthal order for a given number 'n'.
+ * The Jacobsthal order is a sequence of numbers that are less than or equal to 'n'
+ * and are generated based on the Jacobsthal sequence.
+ *
+ * @param n The number for which the Jacobsthal order is to be created.
+ * @return A vector containing the Jacobsthal order.
+ */
 std::vector<int> PmergeMe::create_jacob_order(int n) {
 	std::vector<int> jacobsthal_numbers;
 	for (int i = 0; ; ++i) {
@@ -449,6 +381,23 @@ std::vector<int> PmergeMe::create_jacob_order(int n) {
 	return order;
 }
 
+/**
+ * @brief Creates a Jacob Order deque.
+ *
+ * This function generates a deque of integers in Jacob Order up to a given number 'n'.
+ * Jacob Order is a sequence of numbers defined by the Jacobsthal function.
+ * The Jacobsthal function calculates the nth Jacobsthal number, which is defined recursively as follows:
+ * - Jacobsthal(0) = 0
+ * - Jacobsthal(1) = 1
+ * - Jacobsthal(n) = Jacobsthal(n-1) + 2 * Jacobsthal(n-2)
+ *
+ * The function iterates through the Jacobsthal numbers until it reaches a number greater than 'n'.
+ * It then adds 'n' to the list of Jacobsthal numbers.
+ * Finally, it generates the Jacob Order deque by iterating through the Jacobsthal numbers and adding the difference between consecutive numbers to the deque.
+ *
+ * @param n The maximum number up to which the Jacob Order deque should be generated.
+ * @return A deque of integers in Jacob Order.
+ */
 std::deque<int> PmergeMe::create_jacob_order_deque(int n) {
 	std::vector<int> jacobsthal_numbers;
 	for (int i = 0; ; ++i) {
@@ -486,17 +435,6 @@ void PmergeMe::printDequeOdd() {
 	if (_odd_deque != -1)
 		std::cout << _odd_deque << std::endl;
 }
-// int PmergeMe::jacobsthal(int n) {
-//     if (n == 0) return 0;
-//     if (n == 1) return 1;
-//     int a = 0, b = 1, c;
-//     for (int i = 2; i <= n; ++i) {
-//         c = b + 2 * a;
-//         a = b;
-//         b = c;
-//     }
-//     return b;
-// }
 
 
 /**
@@ -533,58 +471,6 @@ std::deque<int> PmergeMe::insert_deque(const std::deque<int>& coll, int n, int i
 	return result;
 }
 
-
-
-// std::vector<int> PmergeMe::generateJacobSequence(std::vector<int>& array) {
-// 		std::cout << " size of array pend is " << array.size() << std::endl;
-// 		int len = array.size();
-// 		std::vector<int> sequence;
-// 		int jacob_index = 1;
-
-// 		// Loop through and create the sequence
-// 		while (jacobsthal(jacob_index) < len - 1) {
-// 			sequence.push_back(jacobsthal(jacob_index));
-// 			jacob_index += 1;
-// 		}
-// 		return sequence;
-// }
-
-// // Function to generate the nth Jacobsthal number
-// int PmergeMe::jacobsthal(int n) {
-//     return static_cast<int>(round((pow(2, n) + pow(-1, n - 1)) / 3));
-// }
-
-// /**
-//  * @brief Creates the Jacobsthal order for a given number.
-//  *
-//  * This function generates a sequence of indices based on Jacobsthal numbers up to the given number `n`.
-//  * The Jacobsthal numbers are used to determine the order in which elements are processed.
-//  * The function performs the following steps:
-//  * - Generates Jacobsthal numbers until the number exceeds `n`.
-//  * - Adds `n` to the list of Jacobsthal numbers.
-//  * - Creates the order based on the Jacobsthal numbers.
-//  *
-//  * The generated order is used in the Ford-Johnson sorting algorithm to determine the sequence of element processing.
-//  *
-//  * @param n The number up to which Jacobsthal numbers are generated.
-//  * @return A vector of integers representing the order based on Jacobsthal numbers.
-//  */
-// std::vector<int> PmergeMe::create_jacob_order(int n) {
-// 	std::vector<int> jacobsthal_numbers;
-// 	for (int i = 0; ; ++i) {
-// 		int j = jacobsthal(i);
-// 		if (j > n) break;
-// 		jacobsthal_numbers.push_back(j);
-// 	}
-// 	jacobsthal_numbers.push_back(n);
-// 	std::vector<int> order;
-// 	for (size_t i = 1; i < jacobsthal_numbers.size(); ++i) {
-// 		for (int j = jacobsthal_numbers[i]; j > jacobsthal_numbers[i - 1]; --j) {
-// 			order.push_back(j - 1);
-// 		}
-// 	}
-// 	return order;
-// }
 
 // /**
 //  * @brief Finds the insertion point for a given number in a sorted vector using binary search.

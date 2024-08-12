@@ -55,9 +55,9 @@ int main(int argc, char **argv) {
 		std::deque<std::pair<int, int> > pairs = pmm.first_step_deque(pmm.getUnorderedDeque());
 		std::deque<int> sorted_deque = pmm.recursion_deque(pairs, i);
 		clock_t end = clock();
-		std::cout << std::endl;
-		std::cout << "After: ";
-		pmm.printDeque(sorted_deque);
+		// std::cout << std::endl;
+		// std::cout << "After: ";
+		// pmm.printDeque(sorted_deque);
 		double elapsed_time = 60.0 * (end - start) / CLOCKS_PER_SEC;
 		std::cout << "Time to process a range of "<< sorted_deque.size() << " elements with std::[deque] : " << elapsed_time << " us" << std::endl;
 	}
