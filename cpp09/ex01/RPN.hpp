@@ -10,7 +10,7 @@
 class RPN
 {
 	private:
-		std::stack<int, std::list<int>> _myStack;
+		std::stack<int, std::list<int> > _myStack;
 
 	public :
 		RPN();
